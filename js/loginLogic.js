@@ -15,16 +15,16 @@ var testApp = angular.module('BowlingApp', ['ngResource']);
 
 testApp.controller('mainController', function($scope, User) {
 	$scope.message="asdagdvfshbjk";
+	$scope.email = "aa@aa.aaa";
+	$scope.password = "abcdef";
 
 	$scope.login = function(){
-
 		setAuth($scope.email, $scope.password);
 		var json = JSON.stringify({email : $scope.email, password: $scope.password});
 
-		User.login(json).$promise.then(
+		User.signUp.signUp(json).$promise.then(
 		function(value){
 			console.log(value);
-			// console.log(JSON.parse(value));
 			console.log(value.id);
 			$scope.id = value.id;
 		},
@@ -33,6 +33,24 @@ testApp.controller('mainController', function($scope, User) {
 		});
 
 	};
+
+	$scope.signUp = function(){
+
+		setAuth($scope.email, $scope.password);
+		var json = JSON.stringify({email : $scope.email, password: $scope.password});
+
+		User.signUp.signUp(json).$promise.then(
+		function(value){
+			console.log(value);
+			console.log(value.id);
+			$scope.id = value.id;
+		},
+		function(error){
+			console.log(error);
+		});
+
+	};
+	
 	// setAuth("aa@aa.aaa", "abcdef");
 
 	/*User.login({"email":"aa@aa.aaa","password":"abcdef"}).$promise.then(
@@ -46,20 +64,32 @@ testApp.controller('mainController', function($scope, User) {
 
 testApp.factory('User', ['$resource', function($resource){
 
-	return $resource('http://bowling-api.nextcapital.com/api/login',
+	return {
+		login: $resource('http://bowling-api.nextcapital.com/api/login',
 			{},
-        	{
-        		'login': { 
-        			method: 'POST',
+			{
+				login:{
+					method: 'POST',
 					isArray: false,
 					headers: {
 						'Authorization': 'Basic ' + getAuth(),
 						'Content-Type':'application/json'
 					}
-        		}
+				}
+			}),
+		signUp: $resource('http://bowling-api.nextcapital.com/api/users',
+			{},
+			{
+				signUp:{
+					method: 'POST',
+					isArray: false,
+					headers: {
+						// 'Authorization': 'Basic ' + getAuth(),
+						'Content-Type':'application/json'
+					}
+				}
+			})
 
-        	}
-
-		);
+	};
 
 }]);
