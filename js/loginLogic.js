@@ -22,7 +22,7 @@ testApp.controller('mainController', function($scope, User) {
 		setAuth($scope.email, $scope.password);
 		var json = JSON.stringify({email : $scope.email, password: $scope.password});
 
-		User.signUp.signUp(json).$promise.then(
+		User.login.login(json).$promise.then(
 		function(value){
 			console.log(value);
 			console.log(value.id);
@@ -50,6 +50,35 @@ testApp.controller('mainController', function($scope, User) {
 		});
 
 	};
+
+	$scope.getLeagues = function(){
+
+		User.league.getLeagues().$promise.then(
+		function(value){
+			console.log(value);
+			$scope.leagues = value;
+		},
+		function(error){
+			console.log(error);
+		});
+
+	};
+
+	$scope.makeLeague = function(){
+
+		var json = JSON.stringify({email : $scope.email, password: $scope.password});
+
+		User.league.createLeague(json).$promise.then(
+		function(value){
+			console.log(value);
+			// $scope.leagues = value;
+		},
+		function(error){
+			console.log(error);
+		});
+
+	};
+
 	
 	// setAuth("aa@aa.aaa", "abcdef");
 
@@ -77,7 +106,7 @@ testApp.factory('User', ['$resource', function($resource){
 					}
 				}
 			}),
-		signUp: $resource('http://bowling-api.nextcapital.com/api/users',
+		signUp: $resource('http://bowling-api.nextcapital.com/api/users', 
 			{},
 			{
 				signUp:{
@@ -88,6 +117,27 @@ testApp.factory('User', ['$resource', function($resource){
 						'Content-Type':'application/json'
 					}
 				}
+			}),
+		league: $resource('http://bowling-api.nextcapital.com/api/leagues',
+			{},
+			{
+				getLeagues:{
+					method: 'GET',
+					isArray: true,
+					headers: {
+						'Authorization': 'Basic ' + getAuth(),
+						'Content-Type':'application/json'
+					}
+				},
+				createLeague:{
+					method: 'POST',
+					isArray: false,
+					headers: {
+						'Authorization': 'Basic ' + getAuth(),
+						'Content-Type':'application/json'
+					}
+				}
+
 			})
 
 	};
