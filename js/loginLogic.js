@@ -9,6 +9,10 @@ testApp.controller('mainController', function($scope, User) {
 		return btoa($scope.email + ":" + $scope.password);
 	}
 
+	$scope.randomStuff = function(){
+		console.log("Hello!");
+	};
+
 
 	$scope.login = function(){
 		var json = JSON.stringify({email : $scope.email, password: $scope.password});
@@ -135,6 +139,7 @@ testApp.controller('mainController', function($scope, User) {
 		User.league(auth()).addBowlerToLeague({leagueID: leagueID, bowler: "bowlers"}, json).$promise.then(
 		function(value){
 			console.log(value);
+			getAllBowlersInLeagues();
 		},
 		function(error){
 			console.log(error);
@@ -146,6 +151,7 @@ testApp.controller('mainController', function($scope, User) {
 		for(var i = 0; i < $scope.leagues.length; i++)
 		{
 			$scope.getBowlersInLeague($scope.leagues[i].id);
+			// console.log("I: " + i + "\tid: " + $scope.leagues[i].id);
 		}
 
 	}
@@ -153,10 +159,9 @@ testApp.controller('mainController', function($scope, User) {
 	$scope.getBowlersInLeague = function(leagueID){
 		User.league(auth()).getBowlersInLeague({leagueID: leagueID, bowler: "bowlers"}).$promise.then(
 		function(value){
-			// console.log(value);
 			for(var i = 0; i < $scope.leagues.length; i++)
 			{
-				if($scope.leagues[i].id = leagueID)
+				if($scope.leagues[i].id === leagueID)
 				{
 					$scope.leagues[i].bowlers = value;
 				}

@@ -30,6 +30,7 @@
 				<p>email: {{email}}</p>
 			</div>
 		</div>
+		<div class="row"><button ng-click="randomStuff()">Button!</button></div>
 
 		<div class="row">
 			<br/><br/>
@@ -53,16 +54,20 @@
 							<td>{{league.id}}</td>
 							<td>{{league.name}}</td>
 							<td>
-							<select ng-model="league-select-[league.id]" ng-options="bowler.id as bowler.name for bowler in bowlers">
+							<select ng-model="select[league.id]" ng-options="bowler.id as bowler.name for bowler in bowlers">
 							</select>
 <!-- 								<select ng-model="asdf">
 									<option ng-repeat="bowler in bowlers">
 										{{bowler.name}}({{bowler.id}})
 									</option>
 								</select>
- -->								<button ng-click="addBowlerToLeague(league.id,league.select-[league.id])">Add!</button>
+ -->								<button ng-click="addBowlerToLeague(league.id, select[league.id])">Add!</button>
 							</td>
-							<td>{{league.bowlers}}</td>
+							<td>
+								<ul>
+									<li ng-repeat="b in league.bowlers">Name: {{b.name}}, ID: {{b.id}}</li>
+								</ul>
+							</td>
 							<td><button ng-click="getLeague(league.id)">Get More Info</button></td>
 
 						</tr>
@@ -110,7 +115,38 @@
 					<button ng-click="makeBowler()">Make!</button>
 				</div>
 			</div>
+		</div>
 
+		<div class="row">
+			<br/><br/>
+			<h1>Lotteries</h1>
+			<div class="large-6 columns">
+				<button ng-click="getBowlers()">Get Bowlers</button>
+				<br/>
+				<table ng-show="bowlers">
+					<thead>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Get Info</th>
+					</thead>
+					<tbody>
+						<tr ng-repeat="bowler in bowlers">
+							<td>{{bowler.id}}</td>
+							<td>{{bowler.name}}</td>
+							<td><button ng-click="getBowler(bowler.id)">Get More Info</button></td>
+
+						</tr>
+
+					</tbody>
+				</table>
+			</div>
+			<div class="large-6 columns">
+				<h3>Create a Bowler</h3>
+				<div>
+					<p>New Bowler Name:</p><input ng-model="newBowlerName" />
+					<button ng-click="makeBowler()">Make!</button>
+				</div>
+			</div>
 		</div>
 
 
