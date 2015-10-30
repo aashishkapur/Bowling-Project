@@ -34,7 +34,7 @@
 		<div class="row">
 			<br/><br/>
 			<h1>Leagues</h1>
-			<div class="large-6 columns">
+			<div class="large-9 columns">
 				<button ng-click="getLeagues()">Get Leagues</button>
 				<br/>
 				<!-- <ul>
@@ -53,7 +53,14 @@
 							<td>{{league.id}}</td>
 							<td>{{league.name}}</td>
 							<td>
-								<select ng-options="" ng-model=""></select>
+							<select ng-model="league-select-[league.id]" ng-options="bowler.id as bowler.name for bowler in bowlers">
+							</select>
+<!-- 								<select ng-model="asdf">
+									<option ng-repeat="bowler in bowlers">
+										{{bowler.name}}({{bowler.id}})
+									</option>
+								</select>
+ -->								<button ng-click="addBowlerToLeague(league.id,league.select-[league.id])">Add!</button>
 							</td>
 							<td>{{league.bowlers}}</td>
 							<td><button ng-click="getLeague(league.id)">Get More Info</button></td>
@@ -63,7 +70,7 @@
 					</tbody>
 				</table>
 			</div>
-			<div class="large-6 columns">
+			<div class="large-3 columns">
 				<h3>Create a League</h3>
 				<div>
 					<p>New League Name:</p><input ng-model="newLeagueName" />
