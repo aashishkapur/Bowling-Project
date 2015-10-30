@@ -20,11 +20,15 @@ testApp.controller('mainController', function($scope, User) {
 	$scope.email = "test@test123.aaa";
 	$scope.password = "abcdef";
 
+	function auth(){
+		return btoa($scope.email + ":" + $scope.password);
+	}
+
+
 	$scope.login = function(){
-		setAuth($scope.email, $scope.password);
 		var json = JSON.stringify({email : $scope.email, password: $scope.password});
 
-		User.login(btoa($scope.email + ":" + $scope.password)).login(json).$promise.then(
+		User.login(auth()).login(json).$promise.then(
 		function(value){
 			console.log(value);
 			console.log(value.id);
@@ -38,7 +42,6 @@ testApp.controller('mainController', function($scope, User) {
 
 	$scope.signUp = function(){
 
-		setAuth($scope.email, $scope.password);
 		var json = JSON.stringify({email : $scope.email, password: $scope.password});
 
 		User.signUp.signUp().$promise.then(
@@ -55,7 +58,7 @@ testApp.controller('mainController', function($scope, User) {
 
 	$scope.getLeagues = function(){
 
-		User.league(btoa($scope.email + ":" + $scope.password)).getLeagues().$promise.then(
+		User.league(auth()).getLeagues().$promise.then(
 		function(value){
 			console.log(value);
 			$scope.leagues = value;
@@ -68,7 +71,7 @@ testApp.controller('mainController', function($scope, User) {
 
 	$scope.getLeague = function(leagueID){
 
-		User.league(btoa($scope.email + ":" + $scope.password)).getLeague({leagueID: leagueID}).$promise.then(
+		User.league(auth()).getLeague({leagueID: leagueID}).$promise.then(
 		function(value){
 			console.log(value);
 			alert("League Name: " + value.name + "\nID: " + value.id);
@@ -83,7 +86,7 @@ testApp.controller('mainController', function($scope, User) {
 
 		var json = JSON.stringify({name : $scope.newLeagueName});
 
-		User.league(btoa($scope.email + ":" + $scope.password)).createLeague(json).$promise.then(
+		User.league(auth()).createLeague(json).$promise.then(
 		function(value){
 			console.log(value);
 			$scope.getLeagues();
@@ -95,10 +98,6 @@ testApp.controller('mainController', function($scope, User) {
 		$scope.newLeagueName = "";
 
 	};
-
-	function auth(){
-		return btoa($scope.email + ":" + $scope.password);
-	}
 
 	$scope.getBowlers = function(){
 
@@ -130,7 +129,7 @@ testApp.controller('mainController', function($scope, User) {
 
 		var json = JSON.stringify({name : $scope.newBowlerName});
 
-		User.bowler(btoa($scope.email + ":" + $scope.password)).createBowler(json).$promise.then(
+		User.bowler(auth()).createBowler(json).$promise.then(
 		function(value){
 			console.log(value);
 			$scope.getBowlers();
@@ -143,7 +142,15 @@ testApp.controller('mainController', function($scope, User) {
 
 	};
 
-	
+	$scope.addBowlerToLeague = function(leagueID, bowlerID){
+		User.league(auth()).addBowlerToLeague({leagueID: leagueID, bowler: "bowlers"}).$promise.then(
+		function(value){
+			console.log(value);
+		},
+		function(error){
+			console.log(error);
+		});
+	};
 });	
 
 testApp.factory('User', ['$resource', function($resource){
@@ -179,9 +186,10 @@ testApp.factory('User', ['$resource', function($resource){
 				});
 			},
 		league: function(authKey){
-			return $resource('http://bowling-api.nextcapital.com/api/leagues/:leagueID',
+			return $resource('http://bowling-api.nextcapital.com/api/leagues/:leagueID/:bowler',
 				{
-					leagueID:'@id'
+					leagueID:'@id',
+					bowler:'@bowler'
 				},
 				{
 					getLeagues:{
@@ -209,15 +217,15 @@ testApp.factory('User', ['$resource', function($resource){
 						}
 					},
 // check url structure add var for /:id/:bowler, use bowler as a var
-					addBowler:{
+					addBowlerToLeague:{
 						method: 'PUT',
-						isArray: false,
+						isArray: true,
 						headers: {
 							'Authorization': 'Basic ' + authKey,
 							'Content-Type':'application/json'
 						}
 					},
-					getBowlers:{
+					getBowlersInLeague:{
 						method: 'GET',
 						isArray: true,
 						headers: {
