@@ -2,27 +2,29 @@ var email = "", pass = "";
 
 function getAuth()
 {
+	console.log("getAuth, email: " + email + "\tpass: " + pass);
+
 	return btoa(email + ":" + pass);
 }
 
 function setAuth(email, pass)
 {
 	this.email = email;
-	this.pass = pass; 
+	this.pass = pass;
+	console.log("setAuth, email: " + email + "\tpass" + pass);
 }
 
 var testApp = angular.module('BowlingApp', ['ngResource']);
 
 testApp.controller('mainController', function($scope, User) {
-	$scope.message="asdagdvfshbjk";
-	$scope.email = "aa@aa.aaa";
+	$scope.email = "test@test123.aaa";
 	$scope.password = "abcdef";
 
 	$scope.login = function(){
 		setAuth($scope.email, $scope.password);
 		var json = JSON.stringify({email : $scope.email, password: $scope.password});
 
-		User.login.login(json).$promise.then(
+		User.login(btoa($scope.email + ":" + $scope.password)).login(json).$promise.then(
 		function(value){
 			console.log(value);
 			console.log(value.id);
@@ -39,7 +41,7 @@ testApp.controller('mainController', function($scope, User) {
 		setAuth($scope.email, $scope.password);
 		var json = JSON.stringify({email : $scope.email, password: $scope.password});
 
-		User.signUp.signUp(json).$promise.then(
+		User.signUp.signUp().$promise.then(
 		function(value){
 			console.log(value);
 			console.log(value.id);
@@ -53,7 +55,7 @@ testApp.controller('mainController', function($scope, User) {
 
 	$scope.getLeagues = function(){
 
-		User.league.getLeagues().$promise.then(
+		User.league(btoa($scope.email + ":" + $scope.password)).getLeagues().$promise.then(
 		function(value){
 			console.log(value);
 			$scope.leagues = value;
@@ -64,14 +66,12 @@ testApp.controller('mainController', function($scope, User) {
 
 	};
 
-	$scope.makeLeague = function(){
+	$scope.getLeague = function(leagueID){
 
-		var json = JSON.stringify({email : $scope.email, password: $scope.password});
-
-		User.league.createLeague(json).$promise.then(
+		User.league(btoa($scope.email + ":" + $scope.password)).getLeague({leagueID: leagueID}).$promise.then(
 		function(value){
 			console.log(value);
-			// $scope.leagues = value;
+			alert("League Name: " + value.name + "\nID: " + value.id);
 		},
 		function(error){
 			console.log(error);
@@ -79,67 +79,186 @@ testApp.controller('mainController', function($scope, User) {
 
 	};
 
-	
-	// setAuth("aa@aa.aaa", "abcdef");
+	$scope.makeLeague = function(){
 
-	/*User.login({"email":"aa@aa.aaa","password":"abcdef"}).$promise.then(
+		var json = JSON.stringify({name : $scope.newLeagueName});
+
+		User.league(btoa($scope.email + ":" + $scope.password)).createLeague(json).$promise.then(
 		function(value){
-			console.log(value.id);
+			console.log(value);
+			$scope.getLeagues();
 		},
 		function(error){
 			console.log(error);
-		});*/
+		});
+
+		$scope.newLeagueName = "";
+
+	};
+
+	function auth(){
+		return btoa($scope.email + ":" + $scope.password);
+	}
+
+	$scope.getBowlers = function(){
+
+		User.bowler(auth()).getBowlers().$promise.then(
+		function(value){
+			console.log(value);
+			$scope.bowlers = value;
+		},
+		function(error){
+			console.log(error);
+		});
+
+	};
+
+	$scope.getBowler = function(bowlerID){
+
+		User.bowler(auth()).getBowler({bowlerID: bowlerID}).$promise.then(
+		function(value){
+			console.log(value);
+			alert("Bowler Name: " + value.name + "\nID: " + value.id);
+		},
+		function(error){
+			console.log(error);
+		});
+
+	};
+
+	$scope.makeBowler = function(){
+
+		var json = JSON.stringify({name : $scope.newBowlerName});
+
+		User.bowler(btoa($scope.email + ":" + $scope.password)).createBowler(json).$promise.then(
+		function(value){
+			console.log(value);
+			$scope.getBowlers();
+		},
+		function(error){
+			console.log(error);
+		});
+
+		$scope.newBowlerName = "";
+
+	};
+
+	
 });	
 
 testApp.factory('User', ['$resource', function($resource){
 
 	return {
-		login: $resource('http://bowling-api.nextcapital.com/api/login',
-			{},
-			{
-				login:{
-					method: 'POST',
-					isArray: false,
-					headers: {
-						'Authorization': 'Basic ' + getAuth(),
-						'Content-Type':'application/json'
+		login: function(authKey) {
+				return $resource('http://bowling-api.nextcapital.com/api/login',
+					{},
+					{
+						login:{
+							method: 'POST',
+							isArray: false,
+							headers: {
+								'Authorization': 'Basic ' + authKey,
+								'Content-Type':'application/json'
+							}
+						}
 					}
-				}
-			}),
-		signUp: $resource('http://bowling-api.nextcapital.com/api/users', 
-			{},
-			{
-				signUp:{
-					method: 'POST',
-					isArray: false,
-					headers: {
-						// 'Authorization': 'Basic ' + getAuth(),
-						'Content-Type':'application/json'
+				);
+			},
+		signUp: function(){
+			return $resource('http://bowling-api.nextcapital.com/api/users', 
+				{},
+				{
+					signUp:{
+						method: 'POST',
+						isArray: false,
+						headers: {
+							// 'Authorization': 'Basic ' + getAuth(),
+							'Content-Type':'application/json'
+						}
 					}
-				}
-			}),
-		league: $resource('http://bowling-api.nextcapital.com/api/leagues',
-			{},
-			{
-				getLeagues:{
-					method: 'GET',
-					isArray: true,
-					headers: {
-						'Authorization': 'Basic ' + getAuth(),
-						'Content-Type':'application/json'
-					}
+				});
+			},
+		league: function(authKey){
+			return $resource('http://bowling-api.nextcapital.com/api/leagues/:leagueID',
+				{
+					leagueID:'@id'
 				},
-				createLeague:{
-					method: 'POST',
-					isArray: false,
-					headers: {
-						'Authorization': 'Basic ' + getAuth(),
-						'Content-Type':'application/json'
+				{
+					getLeagues:{
+						method: 'GET',
+						isArray: true,
+						headers: {
+							'Authorization': 'Basic ' + authKey,
+							'Content-Type':'application/json'
+						}
+					},
+					getLeague:{
+						method: 'GET',
+						isArray: false,
+						headers: {
+							'Authorization': 'Basic ' + authKey,
+							'Content-Type':'application/json'
+						}
+					},
+					createLeague:{
+						method: 'POST',
+						isArray: false,
+						headers: {
+							'Authorization': 'Basic ' + authKey,
+							'Content-Type':'application/json'
+						}
+					},
+// check url structure add var for /:id/:bowler, use bowler as a var
+					addBowler:{
+						method: 'PUT',
+						isArray: false,
+						headers: {
+							'Authorization': 'Basic ' + authKey,
+							'Content-Type':'application/json'
+						}
+					},
+					getBowlers:{
+						method: 'GET',
+						isArray: true,
+						headers: {
+							'Authorization': 'Basic ' + authKey,
+							'Content-Type':'application/json'
+						}
 					}
-				}
-
-			})
-
+				})
+			},
+		bowler: function(authKey){
+			return $resource('http://bowling-api.nextcapital.com/api/bowlers/:bowlerID',
+				{
+					bowlerID:'@id'
+				},
+				{
+					getBowlers:{
+						method: 'GET',
+						isArray: true,
+						headers: {
+							'Authorization': 'Basic ' + authKey,
+							'Content-Type':'application/json'
+						}
+					},
+					getBowler:{
+						method: 'GET',
+						isArray: false,
+						headers: {
+							'Authorization': 'Basic ' + authKey,
+							'Content-Type':'application/json'
+						}
+					},
+					createBowler:{
+						method: 'POST',
+						isArray: false,
+						headers: {
+							'Authorization': 'Basic ' + authKey,
+							'Content-Type':'application/json'
+						}
+					}
+				})
+			}
 	};
 
 }]);
