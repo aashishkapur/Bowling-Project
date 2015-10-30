@@ -44,12 +44,18 @@
 					<thead>
 						<th>ID</th>
 						<th>Name</th>
+						<th>Add Bowlers</th>
+						<th>Bowlers</th>
 						<th>Get Info</th>
 					</thead>
 					<tbody>
 						<tr ng-repeat="league in leagues">
 							<td>{{league.id}}</td>
 							<td>{{league.name}}</td>
+							<td>
+								<select ng-options="" ng-model=""></select>
+							</td>
+							<td>{{league.bowlers}}</td>
 							<td><button ng-click="getLeague(league.id)">Get More Info</button></td>
 
 						</tr>

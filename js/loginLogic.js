@@ -1,18 +1,3 @@
-var email = "", pass = "";
-
-function getAuth()
-{
-	console.log("getAuth, email: " + email + "\tpass: " + pass);
-
-	return btoa(email + ":" + pass);
-}
-
-function setAuth(email, pass)
-{
-	this.email = email;
-	this.pass = pass;
-	console.log("setAuth, email: " + email + "\tpass" + pass);
-}
 
 var testApp = angular.module('BowlingApp', ['ngResource']);
 
@@ -62,6 +47,8 @@ testApp.controller('mainController', function($scope, User) {
 		function(value){
 			console.log(value);
 			$scope.leagues = value;
+			getAllBowlersInLeagues();
+
 		},
 		function(error){
 			console.log(error);
@@ -79,6 +66,7 @@ testApp.controller('mainController', function($scope, User) {
 		function(error){
 			console.log(error);
 		});
+
 
 	};
 
@@ -143,7 +131,8 @@ testApp.controller('mainController', function($scope, User) {
 	};
 
 	$scope.addBowlerToLeague = function(leagueID, bowlerID){
-		User.league(auth()).addBowlerToLeague({leagueID: leagueID, bowler: "bowlers"}).$promise.then(
+		var json = JSON.stringify({bowler_id: bowlerID});
+		User.league(auth()).addBowlerToLeague({leagueID: leagueID, bowler: "bowlers"}, json).$promise.then(
 		function(value){
 			console.log(value);
 		},
@@ -151,6 +140,35 @@ testApp.controller('mainController', function($scope, User) {
 			console.log(error);
 		});
 	};
+
+	function getAllBowlersInLeagues()
+	{
+		for(var i = 0; i < $scope.leagues.length; i++)
+		{
+			$scope.getBowlersInLeague($scope.leagues[i].id);
+		}
+
+	}
+
+	$scope.getBowlersInLeague = function(leagueID){
+		User.league(auth()).getBowlersInLeague({leagueID: leagueID, bowler: "bowlers"}).$promise.then(
+		function(value){
+			// console.log(value);
+			for(var i = 0; i < $scope.leagues.length; i++)
+			{
+				if($scope.leagues[i].id = leagueID)
+				{
+					$scope.leagues[i].bowlers = value;
+				}
+			}
+		},
+		function(error){
+			console.log(error);
+			alert("error: " + error);
+		});
+
+	};
+
 });	
 
 testApp.factory('User', ['$resource', function($resource){
