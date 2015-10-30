@@ -52,6 +52,8 @@ testApp.controller('mainController', function($scope, User) {
 			console.log(value);
 			$scope.leagues = value;
 			getAllBowlersInLeagues();
+			getAllLotteriesInLeagues();
+
 
 		},
 		function(error){
@@ -136,7 +138,7 @@ testApp.controller('mainController', function($scope, User) {
 
 	$scope.addBowlerToLeague = function(leagueID, bowlerID){
 		var json = JSON.stringify({bowler_id: bowlerID});
-		User.league(auth()).addBowlerToLeague({leagueID: leagueID, bowler: "bowlers"}, json).$promise.then(
+		User.league(auth()).addBowlerToLeague({leagueID: leagueID, type: "bowlers"}, json).$promise.then(
 		function(value){
 			console.log(value);
 			getAllBowlersInLeagues();
@@ -157,7 +159,7 @@ testApp.controller('mainController', function($scope, User) {
 	}
 
 	$scope.getBowlersInLeague = function(leagueID){
-		User.league(auth()).getBowlersInLeague({leagueID: leagueID, bowler: "bowlers"}).$promise.then(
+		User.league(auth()).getBowlersInLeague({leagueID: leagueID, type: "bowlers"}).$promise.then(
 		function(value){
 			for(var i = 0; i < $scope.leagues.length; i++)
 			{
@@ -173,6 +175,36 @@ testApp.controller('mainController', function($scope, User) {
 		});
 
 	};
+
+	function getAllLotteriesInLeagues()
+	{
+		console.log("get lotteries");
+		for(var i = 0; i < $scope.leagues.length; i++)
+		{
+			$scope.getLotteriesInLeague($scope.leagues[i].id);
+			console.log("I:" + i);
+		}
+
+	}
+
+	$scope.getLotteriesInLeague = function(leagueID){
+		User.league(auth()).getLotteriesInLeague({leagueID: leagueID, type: "lotteries"}).$promise.then(
+		function(value){
+			for(var i = 0; i < $scope.leagues.length; i++)
+			{
+				if($scope.leagues[i].id === leagueID)
+				{
+					$scope.leagues[i].lotteries = value;
+				}
+			}
+		},
+		function(error){
+			console.log(error);
+			alert("error: " + error);
+		});
+
+	};
+
 
 });	
 
@@ -209,10 +241,12 @@ testApp.factory('User', ['$resource', function($resource){
 				});
 			},
 		league: function(authKey){
-			return $resource('http://bowling-api.nextcapital.com/api/leagues/:leagueID/:bowler',
+			return $resource('http://bowling-api.nextcapital.com/api/leagues/:leagueID/:type/:lotteryID/:type2',
 				{
 					leagueID:'@id',
-					bowler:'@bowler'
+					type:'@type',
+					lotteryID:'@lotteryID',
+					type2:'@type2'
 				},
 				{
 					getLeagues:{
@@ -239,7 +273,6 @@ testApp.factory('User', ['$resource', function($resource){
 							'Content-Type':'application/json'
 						}
 					},
-// check url structure add var for /:id/:bowler, use bowler as a var
 					addBowlerToLeague:{
 						method: 'PUT',
 						isArray: true,
@@ -255,7 +288,16 @@ testApp.factory('User', ['$resource', function($resource){
 							'Authorization': 'Basic ' + authKey,
 							'Content-Type':'application/json'
 						}
-					}
+					},
+					getLotteriesInLeague:{
+						method: 'GET',
+						isArray: true,
+						headers: {
+							'Authorization': 'Basic ' + authKey,
+							'Content-Type':'application/json'
+						}
+					},
+
 				})
 			},
 		bowler: function(authKey){

@@ -35,7 +35,7 @@
 		<div class="row">
 			<br/><br/>
 			<h1>Leagues</h1>
-			<div class="large-9 columns">
+			<div class="large-12 columns">
 				<button ng-click="getLeagues()">Get Leagues</button>
 				<br/>
 				<!-- <ul>
@@ -47,6 +47,7 @@
 						<th>Name</th>
 						<th>Add Bowlers</th>
 						<th>Bowlers</th>
+						<th>Lotteries</th>
 						<th>Get Info</th>
 					</thead>
 					<tbody>
@@ -54,27 +55,25 @@
 							<td>{{league.id}}</td>
 							<td>{{league.name}}</td>
 							<td>
-							<select ng-model="select[league.id]" ng-options="bowler.id as bowler.name for bowler in bowlers">
-							</select>
-<!-- 								<select ng-model="asdf">
-									<option ng-repeat="bowler in bowlers">
-										{{bowler.name}}({{bowler.id}})
-									</option>
-								</select>
- -->								<button ng-click="addBowlerToLeague(league.id, select[league.id])">Add!</button>
+								<select ng-model="select[league.id]" ng-options="bowler.id as bowler.name for bowler in bowlers"></select>
+								<button ng-click="addBowlerToLeague(league.id, select[league.id])">Add!</button>
 							</td>
 							<td>
 								<ul>
 									<li ng-repeat="b in league.bowlers">Name: {{b.name}}, ID: {{b.id}}</li>
 								</ul>
 							</td>
+							<td>
+							{{league.lotteries}}
+							</td>
 							<td><button ng-click="getLeague(league.id)">Get More Info</button></td>
-
 						</tr>
 
 					</tbody>
 				</table>
 			</div>
+		</div>
+		<div class="row">
 			<div class="large-3 columns">
 				<h3>Create a League</h3>
 				<div>
@@ -82,8 +81,8 @@
 					<button ng-click="makeLeague()">Make!</button>
 				</div>
 			</div>
-
 		</div>
+
 
 		<div class="row">
 			<br/><br/>
@@ -120,7 +119,7 @@
 		<div class="row">
 			<br/><br/>
 			<h1>Lotteries</h1>
-			<div class="large-6 columns">
+<!-- 			<div class="large-6 columns">
 				<button ng-click="getBowlers()">Get Bowlers</button>
 				<br/>
 				<table ng-show="bowlers">
@@ -146,7 +145,7 @@
 					<p>New Bowler Name:</p><input ng-model="newBowlerName" />
 					<button ng-click="makeBowler()">Make!</button>
 				</div>
-			</div>
+			</div> -->
 		</div>
 
 
