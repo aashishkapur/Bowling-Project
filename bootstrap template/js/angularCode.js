@@ -13,8 +13,15 @@ templateApp.controller('mainController', function($scope){
 		{id:1, name:"league 1", bowlers: 10, jackpot: 1},
 		{id:2, name:"league 2", bowlers: 50, jackpot: 432},
 		{id:3, name:"league 3", bowlers: 25, jackpot: 325}, 
-		{id:4, name:"league 4", bowlers: 5, jackpot: 105}
+		{id:4, name:"league 4", bowlers: 5, jackpot: 105.5050}
 	];
+
+	$scope.activeLeague = $scope.leagues[0];
+
+	$scope.changeActiveLeague = function(leagueID){
+		$scope.activeLeague = leagueID;
+		console.log(leagueID);
+	};
 
 	$scope.activeBowlers = [];
 

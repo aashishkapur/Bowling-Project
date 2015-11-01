@@ -27,8 +27,13 @@
 }
 .smallLeagueBox:hover{
 	background-color: white;
-
 }
+
+.smallLeagueBoxActive{
+	background-color: green !important;
+	opacity: .8 !important;
+}
+
 .smallLeagueBoxName{
 	min-height: 80px;
 	padding-top: 15px;
