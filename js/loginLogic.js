@@ -241,17 +241,21 @@ testApp.controller('mainController', function($scope, User) {
 			).$promise.then(
 		function(value){
 			// console.log(value);
-			console.log("getAllTickets: " + value);
+			// console.log("getAllTickets: " + value + "\t\t" + typeof value[0].lottery_id + "\t" + typeof value);
 			// $scope.allTickets.push(value);
-			for(var i = 0; i < $scope.leagues.length; i++)
+			if(value[0] == false)
+				console.log("false false false " + leagueID);
+			else
 			{
-				for(var j = 0; j < $scope.leagues[i].lotteries.length; j++)
+				for(var i = 0; i < $scope.leagues.length; i++)
 				{
-					if(leagueID === $scope.leagues[i].id && value[0].lottery_id === $scope.leagues[i].lotteries[j].id)
-						$scope.leagues[i].lotteries[j].tickets = value;
+					for(var j = 0; j < $scope.leagues[i].lotteries.length; j++)
+					{
+						if(leagueID === $scope.leagues[i].id && value[0].lottery_id === $scope.leagues[i].lotteries[j].id)
+							$scope.leagues[i].lotteries[j].tickets = value;
+					}
 				}
 			}
-
 		},
 		function(error){
 			console.log(error);
@@ -260,25 +264,18 @@ testApp.controller('mainController', function($scope, User) {
 	};
 
 
-
-
-
-
-
-	// $scope.getTickets = function(lotteryID){
-	// 	// console.log("getTickets: " + lotteryID);
-	// 	var returnArry = [];
-	// 	for(var i = 0; i < $scope.allTickets.length; i++)
-	// 	{
-	// 		if($scope.allTickets[i].id === lotteryID)
-	// 			returnArry.push($scope.allTickets[i]);
-	// 	}
-
-	// 	// console.log("getTickets: " + lotteryID + "\t" + returnArry);
-
-	// 	return returnArry;
-	// };
-
+	$scope.drawTicket = function(lotteries){
+		User.league(auth()).getWinningTicketForJackpot(
+				{leagueID: leagueID, type: "lotteries", lotteryID: lotteries[0].id, type2: "roll"}
+			).$promise.then(
+		function(value){
+			console.log(value);
+		},
+		function(error){
+			console.log(error);
+			alert("error: " + error);
+		});
+	};
 
 });	
 
@@ -387,7 +384,7 @@ testApp.factory('User', ['$resource', function($resource){
 							'Content-Type':'application/json'
 						}
 					},
-					getWinningTicketsForJackpot:{
+					getWinningTicketForJackpot:{
 						method: 'GET',
 						isArray: false,
 						headers:{

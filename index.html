@@ -50,6 +50,7 @@
 						<th>Lotteries</th>
 						<!-- <th>Get Info</th> -->
 						<!-- <th>Lottery Tickets</th> -->
+						<th>Draw Ticket</th>
 					</thead>
 					<tbody>
 						<tr ng-repeat="league in leagues">
@@ -70,14 +71,19 @@
 							<td>
 								<ul>
 									<li ng-repeat="lottery in league.lotteries">
-										{{lottery}}
+										Lottery ID: {{lottery.id}}, league ID: {{lottery.league_id}}, balance: {{lottery.balance}}, payout: {{lottery.payout}}
 										<br/>
 										<!-- Tickets:{{lottery.tickets}} -->
-										<span ng-repeat="ticket in lottery.tickets">{{ticket}}</span>
+										<ul>
+											<li ng-repeat="ticket in lottery.tickets">
+												ID: {{ticket.id}}, BowlerID: {{ticket.bowler_id}}, isWinner: {{ticket.is_winner}}
+												</li>
+										</ul>
 									</li>
 								</ul>
 							</td>
 							<!-- <td><button ng-click="getLeague(league.id)">Get More Info</button></td> -->
+							<td><button ng-click="drawTicket(league.lotteries)">Draw Ticket!</button></td>
 						</tr>
 
 					</tbody>
