@@ -10,7 +10,7 @@ testApp.controller('mainController', function($scope, User) {
 	}
 
 	$scope.randomStuff = function(){
-		console.log("Hello!");
+		console.log($scope.allTickets);
 	};
 
 
@@ -22,6 +22,10 @@ testApp.controller('mainController', function($scope, User) {
 			console.log(value);
 			console.log(value.id);
 			$scope.id = value.id;
+
+			// getBowlers(), getLeagues()
+			$scope.getBowlers();
+			$scope.getLeagues();
 		},
 		function(error){
 			console.log(error);
@@ -195,6 +199,9 @@ testApp.controller('mainController', function($scope, User) {
 				if($scope.leagues[i].id === leagueID)
 				{
 					$scope.leagues[i].lotteries = value;
+					// method call here
+					$scope.getAllTickets(leagueID, value);
+
 				}
 			}
 		},
@@ -204,6 +211,73 @@ testApp.controller('mainController', function($scope, User) {
 		});
 
 	};
+
+	$scope.buyTicket = function(leagueID, bowlerID, lotteries){
+		console.log("BUY TICKET: leagueID: " + leagueID + ", bowlerID: " + bowlerID + 
+			", lotteries: " + lotteries[0].id);
+
+		var json = JSON.stringify({bowler_id:bowlerID});
+		User.league(auth()).buyTicketForBowler(
+			{leagueID: leagueID, type: "lotteries", lotteryID: lotteries[0].id, type2: "tickets"},
+			json).$promise.then(
+		function(value){
+			console.log(value);
+			$scope.getAllTickets(leagueID, lotteries);
+		},
+		function(error){
+			console.log(error);
+			alert("error: " + error);
+		});
+	};
+
+	// $scope.allTickets = [];
+
+	$scope.getAllTickets = function(leagueID, lotteries){
+		
+		console.log("getAllTickets: leagueID: " + leagueID + ", lotteries: " + lotteries[0].id);
+
+		User.league(auth()).getAllTicketsForJackpot(
+				{leagueID: leagueID, type: "lotteries", lotteryID: lotteries[0].id, type2: "tickets"}
+			).$promise.then(
+		function(value){
+			// console.log(value);
+			console.log("getAllTickets: " + value);
+			// $scope.allTickets.push(value);
+			for(var i = 0; i < $scope.leagues.length; i++)
+			{
+				for(var j = 0; j < $scope.leagues[i].lotteries.length; j++)
+				{
+					if(leagueID === $scope.leagues[i].id && value[0].lottery_id === $scope.leagues[i].lotteries[j].id)
+						$scope.leagues[i].lotteries[j].tickets = value;
+				}
+			}
+
+		},
+		function(error){
+			console.log(error);
+			alert("error: " + error);
+		});
+	};
+
+
+
+
+
+
+
+	// $scope.getTickets = function(lotteryID){
+	// 	// console.log("getTickets: " + lotteryID);
+	// 	var returnArry = [];
+	// 	for(var i = 0; i < $scope.allTickets.length; i++)
+	// 	{
+	// 		if($scope.allTickets[i].id === lotteryID)
+	// 			returnArry.push($scope.allTickets[i]);
+	// 	}
+
+	// 	// console.log("getTickets: " + lotteryID + "\t" + returnArry);
+
+	// 	return returnArry;
+	// };
 
 
 });	
@@ -296,7 +370,39 @@ testApp.factory('User', ['$resource', function($resource){
 							'Authorization': 'Basic ' + authKey,
 							'Content-Type':'application/json'
 						}
+					},//-----------
+					buyTicketForBowler:{
+						method: 'POST',
+						isArray: false,
+						headers:{
+							'Authorization': 'Basic ' + authKey,
+							'Content-Type':'application/json'
+						}
 					},
+					getAllTicketsForJackpot:{
+						method: 'GET',
+						isArray: true,
+						headers:{
+							'Authorization': 'Basic ' + authKey,
+							'Content-Type':'application/json'
+						}
+					},
+					getWinningTicketsForJackpot:{
+						method: 'GET',
+						isArray: false,
+						headers:{
+							'Authorization': 'Basic ' + authKey,
+							'Content-Type':'application/json'
+						}
+					},
+					recordResultsOfRoll:{
+						method: 'PUT',
+						isArray: false,
+						headers:{
+							'Authorization': 'Basic ' + authKey,
+							'Content-Type':'application/json'
+						}
+					}
 
 				})
 			},
