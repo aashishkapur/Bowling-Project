@@ -1,0 +1,52 @@
+		<div class="bottom">
+		{{}}
+			<div class="layout">
+				<div id="table">
+					<div class="smallLeagueBox" ng-repeat="league in leagues" ng-click="changeActiveLeague(league)" ng-class="{'smallLeagueBoxActive': league === activeLeague}">
+						<div class="smallLeagueBoxName">
+							<span>{{league.name}}</span>
+						</div>
+						<div class="smallLeagueBoxInfo">
+							<span>{{league.bowlers}} Bowlers, {{league.jackpot | currency}} Jackpot</span>
+						</div>
+
+					</div>
+				</div>
+				<div class="leagueInfoBox">
+					<div class="leagueInfoBoxTitle"><span>{{activeLeague.name}}</span></div>
+					<div class="bowlers">
+						<span class="title">Bowlers</span>
+						<br/>John Doe<br/>
+						<button class="btn" data-toggle="modal" data-target="#myModal">Add Bowlers</button>
+						<br/>
+						total bowlers: {{activeLeague.bowlers}}
+					</div>
+					<div class="lotteries"><span class="title">Lotteries</span><br/>Balance: ${{activeLeague.jackpot}}</div>
+				</div>
+			</div>
+
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+						<h4 class="modal-title" id="myModalLabel">Add Bowlers!</h4>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-lg-8 col-lg-offset-2">
+								 {{bowlers}}
+								<ul class="bowlerSelect">
+									<li class="bowlerSelectItem" ng-repeat="bowler in bowlers" ng-click="changeActiveState(bowler.id)" ng-class="{'bowlerSelectItemActive': getActiveBowlers(bowler.id)}">{{bowler.name}}</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			  </div>
+			</div>
+
+
+		</div> <!-- /container -->
