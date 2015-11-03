@@ -44,9 +44,9 @@
 							<li ng-repeat="lottery in activeLeague.lotteries">
 								Lottery ID: {{lottery.id}}, league ID: {{lottery.league_id}}, balance: {{lottery.balance}}, payout: {{lottery.payout}}
 								<br/>
-								<ul>
-									<li ng-repeat="ticket in lottery.tickets">
-										ID: {{ticket.id}}, BowlerID: {{ticket.bowler_id}}, isWinner: {{ticket.is_winner}}
+								<ul class="list-group">
+									<li class="list-group-item" ng-repeat="ticket in lottery.tickets"><i class="fa fa-ticket"></i>&nbsp;
+										ID: {{ticket.id}}, BowlerID: {{ticket.bowler_id}}
 									</li>
 								</ul>
 							</li>
@@ -65,17 +65,12 @@
 					<div class="modal-body">
 						<div class="row">
 							<div class="col-lg-8 col-lg-offset-2">
-								 {{activeLeague.otherBowlers}}
-								<!-- <div ng-init="otherBowlers = getOtherBowlers()"> -->
-								<ul class="bowlerSelect">
-									<li class="bowlerSelectItem" ng-repeat="bowler in activeLeague.otherBowlers" ng-click="changeActiveState(bowler.id)" ng-class="{'bowlerSelectItemActive': getActiveBowlers(bowler.id)}">{{bowler.name}}</li>
-								</ul>
-								<br/><br/>
+								<!-- {{activeLeague.otherBowlers}} -->
 								<ul class="list-group">
 									<li class="list-group-item noselect" ng-repeat="bowler in activeLeague.otherBowlers" ng-click="changeActiveState(bowler.id)" ng-class="{'active': getActiveBowlers(bowler.id)}"><i class="fa fa-user"></i>&nbsp;{{bowler.name}}</li>
 								</ul>
 
-								<!-- </div> -->
+								<button class="btn btn-default" ng-click="addOtherBowlersToLeague()">Add Bowlers!</button>
 							</div>
 						</div>
 					</div>

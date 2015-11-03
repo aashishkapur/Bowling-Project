@@ -102,7 +102,13 @@ angular.module('bowlingApp.controllers')
 		API.league().getLeague({leagueID: leagueID}).$promise.then(
 		function(value){
 			console.log(value);
-			alert("League Name: " + value.name + "\nID: " + value.id);
+			// $scope.leagues
+
+			getAllBowlersInLeagues();
+			getAllLotteriesInLeagues();
+
+
+			// alert("League Name: " + value.name + "\nID: " + value.id);
 		},
 		function(error){
 			console.log(error);
@@ -117,9 +123,7 @@ angular.module('bowlingApp.controllers')
 
 		API.league().createLeague(json).$promise.then(
 		function(value){
-			console.l
-
-			og(value);
+			console.log(value);
 			$scope.getLeagues();
 		},
 		function(error){
@@ -282,8 +286,6 @@ angular.module('bowlingApp.controllers')
 			// console.log(value);
 			// console.log("getAllTickets: " + value + "\t\t" + typeof value[0].lottery_id + "\t" + typeof value);
 			// $scope.allTickets.push(value);
-			
-			/*
 
 			if(value[0] == false || typeof value[0] == undefined || value[0].lottery_id == null || value[0].lottery_id == undefined)
 				console.log("false false false " + leagueID);
@@ -299,7 +301,6 @@ angular.module('bowlingApp.controllers')
 				}
 			}
 
-			*/
 		},
 		function(error){
 			console.log(error);
@@ -373,6 +374,27 @@ angular.module('bowlingApp.controllers')
 		$scope.activeLeague.otherBowlers = otherBowlers;
 		console.log($scope.activeLeague.otherBowlers);
 
+	};
+
+	$scope.addOtherBowlersToLeague = function(){
+
+		console.log($scope.activeBowlers);
+
+		for(var i = 0; i < $scope.activeBowlers.length; i++)
+		{
+			// $scope.activeLeague.id
+
+
+			// $scope.activeLeague.bowlers.push($scope.activeBowlers[i]);
+
+			// console.log($scope.activeBowlers[)
+			$scope.addBowlerToLeague($scope.activeLeague.id, $scope.activeBowlers[i]);
+		}
+
+		$scope.getLeagues();
+
+		// close modal, refresh activeLeague and league by calling getLeagues()
+		// THEN, CHANGE MODEL TO REFRESH ONLY THE CURRENT LEAGUE TO SAVE API CALLS
 	};
 
 
