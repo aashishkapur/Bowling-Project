@@ -8,7 +8,6 @@
 						<div class="smallLeagueBoxInfo">
 							<span>{{league.bowlers}} Bowlers, {{league.jackpot | currency}} Jackpot</span>
 						</div>
-
 					</div>
 					<div class="smallLeagueBox"  ng-click="">
 						<div class="smallLeagueBoxName">
@@ -17,16 +16,14 @@
 						<div class="smallLeagueBoxInfo">
 							<!-- <span>{{league.bowlers}} Bowlers, {{league.jackpot | currency}} Jackpot</span> -->
 						</div>
-
 					</div>
-
 				</div>
 				<div class="leagueInfoBox">
 					<div class="leagueInfoBoxTitle"><span>{{activeLeague.name}}</span></div>
 					<div class="bowlers">
 						<span class="title">Bowlers</span>
 						<br/>John Doe<br/>
-						<button class="btn" data-toggle="modal" data-target="#myModal">Add Bowlers</button>
+						<button class="btn" data-toggle="modal" data-target="#myModal" ng-click="getOtherBowlers()">Add Bowlers</button>
 						<br/>
 						All bowlers: 
 						<ul>
@@ -36,9 +33,9 @@
 							</li>
 						</ul>
 						<div class="row"><div class="col-sm-6 col-sm-offset-3">
-						<ul class="list-group">
-							<li class="list-group-item" href="" ng-repeat="bowler in activeLeague.bowlers"><i class="fa fa-user"></i>&nbsp;{{bowler.name}}</li>
-						</ul>
+							<ul class="list-group">
+								<li class="list-group-item" ng-repeat="bowler in activeLeague.bowlers"><i class="fa fa-user"></i>&nbsp;{{bowler.name}}</li>
+							</ul>
 						</div></div>
 
 					</div>
@@ -50,7 +47,7 @@
 								<ul>
 									<li ng-repeat="ticket in lottery.tickets">
 										ID: {{ticket.id}}, BowlerID: {{ticket.bowler_id}}, isWinner: {{ticket.is_winner}}
-										</li>
+									</li>
 								</ul>
 							</li>
 						</ul>
@@ -68,10 +65,17 @@
 					<div class="modal-body">
 						<div class="row">
 							<div class="col-lg-8 col-lg-offset-2">
-								 {{bowlers}}
+								 {{activeLeague.otherBowlers}}
+								<!-- <div ng-init="otherBowlers = getOtherBowlers()"> -->
 								<ul class="bowlerSelect">
-									<li class="bowlerSelectItem" ng-repeat="bowler in bowlers" ng-click="changeActiveState(bowler.id)" ng-class="{'bowlerSelectItemActive': getActiveBowlers(bowler.id)}">{{bowler.name}}</li>
+									<li class="bowlerSelectItem" ng-repeat="bowler in activeLeague.otherBowlers" ng-click="changeActiveState(bowler.id)" ng-class="{'bowlerSelectItemActive': getActiveBowlers(bowler.id)}">{{bowler.name}}</li>
 								</ul>
+								<br/><br/>
+								<ul class="list-group">
+									<li class="list-group-item noselect" ng-repeat="bowler in activeLeague.otherBowlers" ng-click="changeActiveState(bowler.id)" ng-class="{'active': getActiveBowlers(bowler.id)}"><i class="fa fa-user"></i>&nbsp;{{bowler.name}}</li>
+								</ul>
+
+								<!-- </div> -->
 							</div>
 						</div>
 					</div>
@@ -91,11 +95,14 @@
 					<div class="modal-body">
 						<div class="row">
 							<div class="col-lg-8 col-lg-offset-2">
-								 {{bowlers}}
+<!-- 								{{bowlers}}
+								<br/>
+								sdfhjkuhkjliohujn
+
 								<ul class="bowlerSelect">
 									<li class="bowlerSelectItem" ng-repeat="bowler in bowlers" ng-click="changeActiveState(bowler.id)" ng-class="{'bowlerSelectItemActive': getActiveBowlers(bowler.id)}">{{bowler.name}}</li>
 								</ul>
-							</div>
+ -->							</div>
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -107,4 +114,4 @@
 
 
 
-		</div> <!-- /container -->
+		</div>

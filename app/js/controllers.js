@@ -88,6 +88,7 @@ angular.module('bowlingApp.controllers')
 			getAllBowlersInLeagues();
 			getAllLotteriesInLeagues();
 			$scope.activeLeague = $scope.leagues[0];
+			$scope.getBowlers();
 
 		},
 		function(error){
@@ -281,6 +282,9 @@ angular.module('bowlingApp.controllers')
 			// console.log(value);
 			// console.log("getAllTickets: " + value + "\t\t" + typeof value[0].lottery_id + "\t" + typeof value);
 			// $scope.allTickets.push(value);
+			
+			/*
+
 			if(value[0] == false || typeof value[0] == undefined || value[0].lottery_id == null || value[0].lottery_id == undefined)
 				console.log("false false false " + leagueID);
 			else
@@ -294,6 +298,8 @@ angular.module('bowlingApp.controllers')
 					}
 				}
 			}
+
+			*/
 		},
 		function(error){
 			console.log(error);
@@ -339,6 +345,34 @@ angular.module('bowlingApp.controllers')
 
 	$scope.getActiveBowlers = function(id){
 		return $scope.activeBowlers.indexOf(id) >= 0;
+	};
+
+
+	$scope.getOtherBowlers = function(){
+
+		var otherBowlers = [];
+		for(var i = 0; i < $scope.bowlers.length; i++)
+		{
+			var found = false;
+			for(var j = 0; j < $scope.activeLeague.bowlers.length; j++)
+			{
+				console.log("ID:" + $scope.bowlers[i].id + "\t ID2:" + $scope.activeLeague.bowlers[j].id);
+				if($scope.bowlers[i].id === $scope.activeLeague.bowlers[j].id)
+				{
+					found = true;
+					j = $scope.activeLeague.bowlers.length;
+				}
+			}
+			if(!found)
+			{
+				otherBowlers.push($scope.bowlers[i]);
+			}
+		}
+		console.log("getting other bowlers, " + $scope.activeLeague.id);
+		console.log(otherBowlers);
+		$scope.activeLeague.otherBowlers = otherBowlers;
+		console.log($scope.activeLeague.otherBowlers);
+
 	};
 
 
