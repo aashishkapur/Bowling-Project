@@ -60,15 +60,14 @@
 										<h4 class="panel-title">
 											<a class="collapsed" role="button" data-toggle="collapse" href="#collapseListGroup1" aria-expanded="false" aria-controls="collapseListGroup1">
 												Lottery ID: {{lottery.id}}, league ID: {{lottery.league_id}}, balance: {{lottery.balance}}, payout: {{lottery.payout}}
-
 											</a>
 										</h4>
 									</div>
 									<div id="collapseListGroup1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading1">
 										<ul class="list-group">
-											<li class="list-group-item">Bootply</li>
-											<li class="list-group-item">One itmus ac facilin</li>
-											<li class="list-group-item">Second eros</li>
+											<li class="list-group-item" ng-repeat="ticket in lottery.tickets"><i class="fa fa-ticket"></i>&nbsp;
+												ID: {{ticket.id}}, BowlerID: {{ticket.bowler_id}}
+											</li>
 										</ul>
 									</div>
 								</div>
