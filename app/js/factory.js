@@ -3,7 +3,7 @@ angular.module('bowlingApp.factory', ['ngResource']);
 angular.module('bowlingApp.factory')
 
 
-.factory('API', ['$resource', function($resource){
+.factory('API', ['$resource', 'loginCreds', function($resource, loginCreds){
 
 	return {
 		login: function(authKey) {
@@ -29,13 +29,12 @@ angular.module('bowlingApp.factory')
 						method: 'POST',
 						isArray: false,
 						headers: {
-							// 'Authorization': 'Basic ' + getAuth(),
 							'Content-Type':'application/json'
 						}
 					}
 				});
 			},
-		league: function(authKey){
+		league: function(){
 			return $resource('http://bowling-api.nextcapital.com/api/leagues/:leagueID/:type/:lotteryID/:type2',
 				{
 					leagueID:'@id',
@@ -48,7 +47,7 @@ angular.module('bowlingApp.factory')
 						method: 'GET',
 						isArray: true,
 						headers: {
-							'Authorization': 'Basic ' + authKey,
+							'Authorization': 'Basic ' + loginCreds.auth(),
 							'Content-Type':'application/json'
 						}
 					},
@@ -56,7 +55,7 @@ angular.module('bowlingApp.factory')
 						method: 'GET',
 						isArray: false,
 						headers: {
-							'Authorization': 'Basic ' + authKey,
+							'Authorization': 'Basic ' + loginCreds.auth(),
 							'Content-Type':'application/json'
 						}
 					},
@@ -64,7 +63,7 @@ angular.module('bowlingApp.factory')
 						method: 'POST',
 						isArray: false,
 						headers: {
-							'Authorization': 'Basic ' + authKey,
+							'Authorization': 'Basic ' + loginCreds.auth(),
 							'Content-Type':'application/json'
 						}
 					},
@@ -72,7 +71,7 @@ angular.module('bowlingApp.factory')
 						method: 'PUT',
 						isArray: true,
 						headers: {
-							'Authorization': 'Basic ' + authKey,
+							'Authorization': 'Basic ' + loginCreds.auth(),
 							'Content-Type':'application/json'
 						}
 					},
@@ -80,7 +79,7 @@ angular.module('bowlingApp.factory')
 						method: 'GET',
 						isArray: true,
 						headers: {
-							'Authorization': 'Basic ' + authKey,
+							'Authorization': 'Basic ' + loginCreds.auth(),
 							'Content-Type':'application/json'
 						}
 					},
@@ -88,7 +87,7 @@ angular.module('bowlingApp.factory')
 						method: 'GET',
 						isArray: true,
 						headers: {
-							'Authorization': 'Basic ' + authKey,
+							'Authorization': 'Basic ' + loginCreds.auth(),
 							'Content-Type':'application/json'
 						}
 					},//-----------
@@ -96,7 +95,7 @@ angular.module('bowlingApp.factory')
 						method: 'POST',
 						isArray: false,
 						headers:{
-							'Authorization': 'Basic ' + authKey,
+							'Authorization': 'Basic ' + loginCreds.auth(),
 							'Content-Type':'application/json'
 						}
 					},
@@ -104,7 +103,7 @@ angular.module('bowlingApp.factory')
 						method: 'GET',
 						isArray: true,
 						headers:{
-							'Authorization': 'Basic ' + authKey,
+							'Authorization': 'Basic ' + loginCreds.auth(),
 							'Content-Type':'application/json'
 						}
 					},
@@ -112,7 +111,7 @@ angular.module('bowlingApp.factory')
 						method: 'GET',
 						isArray: false,
 						headers:{
-							'Authorization': 'Basic ' + authKey,
+							'Authorization': 'Basic ' + loginCreds.auth(),
 							'Content-Type':'application/json'
 						}
 					},
@@ -120,14 +119,14 @@ angular.module('bowlingApp.factory')
 						method: 'PUT',
 						isArray: false,
 						headers:{
-							'Authorization': 'Basic ' + authKey,
+							'Authorization': 'Basic ' + loginCreds.auth(),
 							'Content-Type':'application/json'
 						}
 					}
 
 				})
 			},
-		bowler: function(authKey){
+		bowler: function(){
 			return $resource('http://bowling-api.nextcapital.com/api/bowlers/:bowlerID',
 				{
 					bowlerID:'@id'
@@ -137,7 +136,7 @@ angular.module('bowlingApp.factory')
 						method: 'GET',
 						isArray: true,
 						headers: {
-							'Authorization': 'Basic ' + authKey,
+							'Authorization': 'Basic ' + loginCreds.auth(),
 							'Content-Type':'application/json'
 						}
 					},
@@ -145,7 +144,7 @@ angular.module('bowlingApp.factory')
 						method: 'GET',
 						isArray: false,
 						headers: {
-							'Authorization': 'Basic ' + authKey,
+							'Authorization': 'Basic ' + loginCreds.auth(),
 							'Content-Type':'application/json'
 						}
 					},
@@ -153,7 +152,7 @@ angular.module('bowlingApp.factory')
 						method: 'POST',
 						isArray: false,
 						headers: {
-							'Authorization': 'Basic ' + authKey,
+							'Authorization': 'Basic ' + loginCreds.auth(),
 							'Content-Type':'application/json'
 						}
 					}

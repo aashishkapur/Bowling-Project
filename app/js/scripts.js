@@ -7,7 +7,12 @@ var bowlingApp = angular.module("bowlingApp",
 		'bowlingApp.services'
 	]);
 
-bowlingApp.config(function($routeProvider) {
+bowlingApp.config(function($routeProvider, loginCredsProvider) {
+
+	 // $provide.service('loginCreds',function(){
+
+	 // });
+
 	$routeProvider
 		// route for the home page
 		.when('/', {
@@ -18,7 +23,14 @@ bowlingApp.config(function($routeProvider) {
 		// route for the about page
 		.when('/leagues', {
 			templateUrl : 'pages/leagues.html',
-			controller  : 'leaguesController'
+			controller  : 'leaguesController',
+			resolve: {
+				data: function(loginCreds){
+					console.log("asfhudfsadfs\t" + loginCreds.signedIn());
+					return loginCreds.signedIn();
+				}
+
+			}
 		})
 
 		// route for the contact page

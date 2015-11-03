@@ -4,6 +4,8 @@ angular.module('bowlingApp.services')
 
 .service('loginCreds', function() {
 	var creds = {};
+	creds.email = "";
+	creds.pass = "";
 
 	return {
 		get: function () {
@@ -15,7 +17,11 @@ angular.module('bowlingApp.services')
 		},
 		auth: function(){
 			return btoa(creds.email + ":" + creds.pass);
+		},
+		signedIn: function(){
+			return !(creds.email === "");
 		}
+
 
 	};
 });
