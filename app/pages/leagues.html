@@ -42,14 +42,37 @@
 					<div class="lotteries"><span class="title">Lotteries</span><br/>
 						<ul>
 							<li ng-repeat="lottery in activeLeague.lotteries">
-								Lottery ID: {{lottery.id}}, league ID: {{lottery.league_id}}, balance: {{lottery.balance}}, payout: {{lottery.payout}}
 								<br/>
-								<ul class="list-group">
-									<li class="list-group-item" ng-repeat="ticket in lottery.tickets"><i class="fa fa-ticket"></i>&nbsp;
-										ID: {{ticket.id}}, BowlerID: {{ticket.bowler_id}}
-									</li>
-								</ul>
+								<div class="row"><div class="col-sm-6 col-sm-offset-3">
+									<ul class="list-group">
+										<li class="list-group-item" ng-repeat="ticket in lottery.tickets"><i class="fa fa-ticket"></i>&nbsp;
+											ID: {{ticket.id}}, BowlerID: {{ticket.bowler_id}}
+										</li>
+									</ul>
+								</div></div>
 							</li>
+
+							<hr/>
+
+							<div class="panel-group" role="tablist">
+								<div ng-repeat="lottery in activeLeague.lotteries" class="panel panel-default">
+									<div class="panel-heading" role="tab" id="collapseListGroupHeading1">
+										<h4 class="panel-title">
+											<a class="collapsed" role="button" data-toggle="collapse" href="#collapseListGroup1" aria-expanded="false" aria-controls="collapseListGroup1">
+												Lottery ID: {{lottery.id}}, league ID: {{lottery.league_id}}, balance: {{lottery.balance}}, payout: {{lottery.payout}}
+
+											</a>
+										</h4>
+									</div>
+									<div id="collapseListGroup1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading1">
+										<ul class="list-group">
+											<li class="list-group-item">Bootply</li>
+											<li class="list-group-item">One itmus ac facilin</li>
+											<li class="list-group-item">Second eros</li>
+										</ul>
+									</div>
+								</div>
+							</div>
 						</ul>
 
 					<br/>Balance: ${{activeLeague.jackpot}}</div>
