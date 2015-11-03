@@ -1,4 +1,3 @@
-
 var testApp = angular.module('BowlingApp', ['ngResource']);
 
 testApp.controller('mainController', function($scope, User) {

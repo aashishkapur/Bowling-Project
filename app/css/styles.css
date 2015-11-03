@@ -8,6 +8,8 @@
 #table{
 	display: inline-block;
 	width: 30%;
+	height: 100%;
+	min-height: 300px;
 	float: left;
 	background-color: rgba(200, 10, 50, .6);
 	min-height: 300px;
@@ -15,6 +17,7 @@
 	padding-left: 5px;
 	padding-right: 5px;
 	border-right: 1px solid black;
+	overflow: scroll;
 }
 .smallLeagueBox{
 	display: block;

@@ -1,5 +1,4 @@
 		<div class="bottom">
-		{{}}
 			<div class="layout">
 				<div id="table">
 					<div class="smallLeagueBox" ng-repeat="league in leagues" ng-click="changeActiveLeague(league)" ng-class="{'smallLeagueBoxActive': league === activeLeague}">
@@ -11,6 +10,16 @@
 						</div>
 
 					</div>
+					<div class="smallLeagueBox"  ng-click="">
+						<div class="smallLeagueBoxName">
+							<span>Add New</span>
+						</div>
+						<div class="smallLeagueBoxInfo">
+							<!-- <span>{{league.bowlers}} Bowlers, {{league.jackpot | currency}} Jackpot</span> -->
+						</div>
+
+					</div>
+
 				</div>
 				<div class="leagueInfoBox">
 					<div class="leagueInfoBoxTitle"><span>{{activeLeague.name}}</span></div>
@@ -19,9 +28,34 @@
 						<br/>John Doe<br/>
 						<button class="btn" data-toggle="modal" data-target="#myModal">Add Bowlers</button>
 						<br/>
-						total bowlers: {{activeLeague.bowlers}}
+						All bowlers: 
+						<ul>
+							<li ng-repeat="b in activeLeague.bowlers">
+								Name: {{b.name}}, ID: {{b.id}}
+								<a ng-click="buyTicket(activeLeague.id, b.id, activeLeague.lotteries)">Buy Tickets</a>
+							</li>
+						</ul>
+						<div class="row"><div class="col-sm-6 col-sm-offset-3">
+						<ul class="list-group">
+							<li class="list-group-item" href="" ng-repeat="bowler in activeLeague.bowlers"><i class="fa fa-user"></i>&nbsp;{{bowler.name}}</li>
+						</ul>
+						</div></div>
+
 					</div>
-					<div class="lotteries"><span class="title">Lotteries</span><br/>Balance: ${{activeLeague.jackpot}}</div>
+					<div class="lotteries"><span class="title">Lotteries</span><br/>
+						<ul>
+							<li ng-repeat="lottery in activeLeague.lotteries">
+								Lottery ID: {{lottery.id}}, league ID: {{lottery.league_id}}, balance: {{lottery.balance}}, payout: {{lottery.payout}}
+								<br/>
+								<ul>
+									<li ng-repeat="ticket in lottery.tickets">
+										ID: {{ticket.id}}, BowlerID: {{ticket.bowler_id}}, isWinner: {{ticket.is_winner}}
+										</li>
+								</ul>
+							</li>
+						</ul>
+
+					<br/>Balance: ${{activeLeague.jackpot}}</div>
 				</div>
 			</div>
 
@@ -47,6 +81,30 @@
 				</div>
 			  </div>
 			</div>
+
+			<div class="modal fade" id="addLeague" tabindex="-1" role="dialog" aria-labelledby="addLeague">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+						<h4 class="modal-title" id="myModalLabel">Add Bowlers!</h4>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-lg-8 col-lg-offset-2">
+								 {{bowlers}}
+								<ul class="bowlerSelect">
+									<li class="bowlerSelectItem" ng-repeat="bowler in bowlers" ng-click="changeActiveState(bowler.id)" ng-class="{'bowlerSelectItemActive': getActiveBowlers(bowler.id)}">{{bowler.name}}</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			  </div>
+			</div>
+
 
 
 		</div> <!-- /container -->

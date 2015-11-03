@@ -1,0 +1,19 @@
+{
+  "name": "bowling-app",
+  "version": "1.0.0",
+  "description": "An app that interacts with the NextCapital APIs and provides a frontend",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.13.3",
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aashishkapur/Bowling-Project.git"
+  },
+  "author": "Aashish Kapur",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aashishkapur/Bowling-Project/issues"
+  },
+  "homepage": "https://github.com/aashishkapur/Bowling-Project"
+}
