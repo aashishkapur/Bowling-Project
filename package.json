@@ -4,7 +4,7 @@
   "description": "An app that interacts with the NextCapital APIs and provides a frontend",
   "main": "server.js",
   "dependencies": {
-    "express": "^4.13.3",
+    "express": "^4.13.3"
   },
   "repository": {
     "type": "git",
