@@ -22,25 +22,32 @@
 					<div class="leagueInfoBoxTitle"><span>{{activeLeague.name}}</span></div>
 					<div class="bowlers">
 						<span class="title">Bowlers</span>
-						<br/>John Doe<br/>
-						<button class="btn" data-toggle="modal" data-target="#myModal" ng-click="getOtherBowlers()">Add Bowlers</button>
+						<!-- <br/>John Doe<br/> -->
 						<br/>
-						All bowlers: 
+<!-- 						All bowlers: 
 						<ul>
 							<li ng-repeat="b in activeLeague.bowlers">
 								Name: {{b.name}}, ID: {{b.id}}
 								<a ng-click="buyTicket(activeLeague.id, b.id, activeLeague.lotteries)">Buy Tickets</a>
 							</li>
 						</ul>
-						<div class="row"><div class="col-sm-8 col-sm-offset-2">
+ -->						
+ 						<div class="row"><div class="col-sm-8 col-sm-offset-2">
 							<ul class="list-group">
 								<li class="list-group-item bowler-item" ng-repeat="bowler in activeLeague.bowlers"><i class="fa fa-user"></i>
 									&nbsp;{{bowler.name}}
 									<div class="buy-tickets-box">Buy Ticket</div>
 									<!-- <button class="buy-tickets-box">Buy Tickets</button> -->
 								</li>
+								<li class="list-group-item bowler-item">
+									<button class="btn bowler-add-button" data-toggle="modal" data-target="#myModal" ng-click="getOtherBowlers()">Add Bowlers</button>
+								</li>
+
+
 							</ul>
 						</div></div>
+<!-- 						<button class="btn" data-toggle="modal" data-target="#myModal" ng-click="getOtherBowlers()">Add Bowlers</button>
+ -->
 
 <!-- 						<div class="row"><div class="col-sm-6 col-sm-offset-3">
 							<div class="bowler-table">
@@ -53,20 +60,19 @@
  -->
 					</div>
 					<div class="lotteries"><span class="title">Lotteries</span><br/>
-						<ul>
+<!-- 						<ul>
 							<li ng-repeat="lottery in activeLeague.lotteries">
 								<br/>
-<!-- 								<div class="row"><div class="col-sm-6 col-sm-offset-3">
+								<div class="row"><div class="col-sm-6 col-sm-offset-3">
 									<ul class="list-group">
 										<li class="list-group-item" ng-repeat="ticket in lottery.tickets"><i class="fa fa-ticket"></i>&nbsp;
 											ID: {{ticket.id}}, BowlerID: {{ticket.bowler_id}}
 										</li>
 									</ul>
 								</div></div>
- -->							</li>
+							</li>
 						</ul>
-
-							<hr/>
+ -->
 
 							<div class="panel-group" role="tablist">
 								<div ng-repeat="lottery in activeLeague.lotteries" class="panel panel-default">
@@ -87,7 +93,8 @@
 								</div>
 							</div>
 
-					<br/>Balance: ${{activeLeague.jackpot}}</div>
+					<!-- <br/>Balance: ${{activeLeague.jackpot}}</div> -->
+
 				</div>
 			</div>
 
