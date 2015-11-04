@@ -240,10 +240,10 @@ angular.module('bowlingApp.controllers')
 					console.log(value);
 					console.log($scope.leagues[i]);
 					// method call here
-					$timeout(function(){
-						$scope.getAllTickets(leagueID, value);
-					});
 
+				$timeout(function(){
+					$scope.getAllTickets(leagueID, value);
+				}, 200);
 
 				}
 			}
@@ -286,17 +286,23 @@ angular.module('bowlingApp.controllers')
 			// console.log(value);
 			// console.log("getAllTickets: " + value + "\t\t" + typeof value[0].lottery_id + "\t" + typeof value);
 			// $scope.allTickets.push(value);
-
-			if(value[0] == false || typeof value[0] == undefined || value[0].lottery_id == null || value[0].lottery_id == undefined)
-				console.log("false false false " + leagueID);
-			else
+			if(value.length > 0)
 			{
-				for(var i = 0; i < $scope.leagues.length; i++)
+				if(typeof value[0] == undefined || 
+					value[0] == false || 
+					value[0].lottery_id == null || 
+					value[0].lottery_id == undefined)
+					console.log("false false false " + leagueID);
+				else
 				{
-					for(var j = 0; j < $scope.leagues[i].lotteries.length; j++)
+					for(var i = 0; i < $scope.leagues.length; i++)
 					{
-						if(leagueID === $scope.leagues[i].id && value[0].lottery_id === $scope.leagues[i].lotteries[j].id)
-							$scope.leagues[i].lotteries[j].tickets = value;
+						for(var j = 0; j < $scope.leagues[i].lotteries.length; j++)
+						{
+							if(leagueID === $scope.leagues[i].id && 
+									value[0].lottery_id === $scope.leagues[i].lotteries[j].id)
+								$scope.leagues[i].lotteries[j].tickets = value;
+						}
 					}
 				}
 			}
