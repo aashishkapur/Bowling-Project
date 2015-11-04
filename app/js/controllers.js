@@ -479,6 +479,37 @@ angular.module('bowlingApp.controllers')
 		$scope.ticketBuyer = bowler;
 	};
 
+	$scope.sortTicketsByPerson = function(){
+		for(var i = 0; i < $scope.activeLeague.lotteries.length; i++)
+		{
+			$scope.activeLeague.lotteries[i].ticketHolders = [];
+			for(var j = 0; j < $scope.activeLeague.lotteries[i].tickets.length; j++)
+			{
+				var ticket = $scope.activeLeague.lotteries[i].tickets[j];
+				var found = false;
+				for(var k = 0; k < $scope.activeLeague.lotteries[i].ticketHolders.length; k++)
+				{
+					if(ticket.bowlerID === $scope.activeLeague.lotteries[i].ticketHolders[k].id)
+					{
+						$scope.activeLeague.lotteries[i].ticketHolders[k].numTickets++;
+						k = $scope.activeLeague.lotteries[i].ticketHolders.length;
+						found = true;
+					}
+				}
+				if(!found)
+				{
+					var newPerson = {
+						bowlerID = ticket.bowlerID,
+						name = getName(ticket.bowlerID),
+						numTickets: 1
+					}
+					$scope.activeLeague.lotteries[i].ticketHolders.push(newPerson);	
+				}
+			}
+		}
+	}
+
+
 
 
 

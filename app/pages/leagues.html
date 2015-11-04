@@ -32,14 +32,18 @@
  						<div class="row"><div class="col-sm-8 col-sm-offset-2">
 							<ul class="list-group">
 								<li class="list-group-item bowler-item" ng-repeat="bowler in activeLeague.bowlers"><i class="fa fa-user"></i>
-									&nbsp;{{bowler.name}}
-									<div class="buy-tickets-box">
+									&nbsp; {{bowler.name}}
+									<button style="float: right; text-align:right;" class="btn btn-link" data-toggle="modal" data-target="#buyTicket" ng-click="updateBuyTicketModal(bowler)">
+											Buy Ticket
+									</button>
+
+<!-- 									<div class="buy-tickets-box">
 										<button class="btn btn-link" data-toggle="modal" data-target="#buyTicket" ng-click="updateBuyTicketModal(bowler)">
 											Buy Ticket
 										</button>
 
 									</div>
-									<!-- <button class="buy-tickets-box">Buy Tickets</button> -->
+ -->									<!-- <button class="buy-tickets-box">Buy Tickets</button> -->
 								</li>
 								<li class="list-group-item bowler-item">
 									<button class="btn bowler-add-button" data-toggle="modal" data-target="#myModal" ng-click="getOtherBowlers()">Add Bowlers</button>
@@ -80,14 +84,14 @@
 								<div ng-repeat="lottery in activeLeague.lotteries" class="panel panel-default">
 									<div class="panel-heading" role="tab" id="collapseListGroupHeading1">
 										<h5 class="panel-title">
-											<button class="btn btn primary" data-target="#collapseListGroup1" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseListGroup1">
+											<button class="btn btn primary" data-target="#collapseListGroup1" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseListGroup1"><i class="fa fa-ticket"></i> &nbsp; 
 												Lottery ID: {{lottery.id}}, league ID: {{lottery.league_id}}, balance: {{lottery.balance}}, payout: {{lottery.payout}}
 											</button>
 										</h5>
 									</div>
 									<div id="collapseListGroup1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading1">
 										<ul class="list-group">
-											<li class="list-group-item" ng-repeat="ticket in lottery.tickets"><i class="fa fa-ticket"></i>&nbsp;
+											<li class="list-group-item" ng-repeat="ticket in 1"><i class="fa fa-ticket"></i> &nbsp;
 												ID: {{ticket.id}}, BowlerID: {{ticket.bowler_id}}
 											</li>
 										</ul>
