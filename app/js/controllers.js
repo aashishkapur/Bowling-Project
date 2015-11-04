@@ -97,6 +97,73 @@ angular.module('bowlingApp.controllers')
 
 	};
 
+	function resetLeague(leagueID){
+		var updatedLeague = {};
+
+		API.league().getLeague({leagueID: leagueID}).$promise.then(
+		function(value){
+			// console.log(value);
+			updatedLeague = value;
+
+			API.league().getBowlersInLeague({leagueID: leagueID, type: "bowlers"}).$promise.then(
+			function(value2){
+				updatedLeague.bowlers = value2;
+
+				API.league().getLotteriesInLeague({leagueID: leagueID, type: "lotteries"}).$promise.then(
+				function(value3){
+
+					updatedLeague.lotteries = value3;
+
+					API.league().getAllTicketsForJackpot(
+							{leagueID: leagueID, type: "lotteries", lotteryID: lotteries[0].id, type2: "tickets"}
+						).$promise.then(
+					function(value4){
+						if(value.length > 0)
+						{
+							for(var j = 0; j < updatedLeague.lotteries.length; j++)
+							{
+								if(value4[0].lottery_id === updatedLeague.lotteries[j].id)
+									updatedLeague.lotteries[j].tickets = value4;
+							}
+						}
+
+					},
+					function(error){
+						console.log(error);
+						alert("error: " + error);
+					});
+						},
+				function(error){
+					console.log(error);
+					alert("error: " + error);
+				});
+
+			},
+			function(error){
+				console.log(error);
+				alert("error: " + error);
+			});
+		},
+		function(error){
+			console.log(error);
+		});
+
+		for(var i = 0; i < $scope.leagues.length; i++)
+		{
+			if(leagueID === $scope.leagues[i].id)
+			{
+				$scope.leagues.splice(i, 1);
+
+				$scope.leagues.push(updatedLeague);
+
+				$scope.changeActiveLeague(leagueID);
+
+				i = $scope.leagues.length;
+			}
+		}
+
+	}
+
 	$scope.getLeague = function(leagueID){
 
 		API.league().getLeague({leagueID: leagueID}).$promise.then(
@@ -104,8 +171,8 @@ angular.module('bowlingApp.controllers')
 			console.log(value);
 			// $scope.leagues
 
-			getAllBowlersInLeagues();
-			getAllLotteriesInLeagues();
+			// getAllBowlersInLeagues();
+			// getAllLotteriesInLeagues();
 
 
 			// alert("League Name: " + value.name + "\nID: " + value.id);
@@ -255,17 +322,19 @@ angular.module('bowlingApp.controllers')
 
 	};
 
-	$scope.buyTicket = function(leagueID, bowlerID, lotteries){
-		console.log("BUY TICKET: leagueID: " + leagueID + ", bowlerID: " + bowlerID + 
-			", lotteries: " + lotteries[0].id);
+	$scope.buyTicket = function(bowlerID){
+		console.log("BUY TICKET: leagueID: " + $scope.activeLeague.id + ", bowlerID: " + bowlerID + 
+			", lotteries: " + $scope.activeLeague.lotteries[0].id);
 
 		var json = JSON.stringify({bowler_id:bowlerID});
 		API.league().buyTicketForBowler(
-			{leagueID: leagueID, type: "lotteries", lotteryID: lotteries[0].id, type2: "tickets"},
+			{leagueID: $scope.activeLeague.id, type: "lotteries", lotteryID: $scope.activeLeague.lotteries[0].id, type2: "tickets"},
 			json).$promise.then(
 		function(value){
 			console.log(value);
-			$scope.getAllTickets(leagueID, lotteries);
+			$scope.getAllTickets($scope.activeLeague.id, $scope.activeLeague.lotteries);
+			$scope.changeActiveLeague($scope.activeLeague.id);
+
 		},
 		function(error){
 			console.log(error);
@@ -330,9 +399,9 @@ angular.module('bowlingApp.controllers')
 
 	$scope.activeLeague;
 
-	$scope.changeActiveLeague = function(leagueID){
-		$scope.activeLeague = leagueID;
-		console.log(leagueID);
+	$scope.changeActiveLeague = function(league){
+		$scope.activeLeague = league;
+		console.log("CHANGE ACTIVE LEAGUE: " + league);
 	};
 
 	$scope.activeBowlers = [];
@@ -397,11 +466,20 @@ angular.module('bowlingApp.controllers')
 			$scope.addBowlerToLeague($scope.activeLeague.id, $scope.activeBowlers[i]);
 		}
 
-		$scope.getLeagues();
+		// $scope.getLeagues();
+		resetLeague($scope.activeLeague.id);
 
 		// close modal, refresh activeLeague and league by calling getLeagues()
 		// THEN, CHANGE MODEL TO REFRESH ONLY THE CURRENT LEAGUE TO SAVE API CALLS
 	};
+
+	$scope.ticketBuyer = {};
+
+	$scope.updateBuyTicketModal = function(bowler){
+		$scope.ticketBuyer = bowler;
+	};
+
+
 
 
 });

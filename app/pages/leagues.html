@@ -13,9 +13,6 @@
 						<div class="smallLeagueBoxName">
 							<span>Add New</span>
 						</div>
-						<div class="smallLeagueBoxInfo">
-							<!-- <span>{{league.bowlers}} Bowlers, {{league.jackpot | currency}} Jackpot</span> -->
-						</div>
 					</div>
 				</div>
 				<div class="leagueInfoBox">
@@ -36,7 +33,12 @@
 							<ul class="list-group">
 								<li class="list-group-item bowler-item" ng-repeat="bowler in activeLeague.bowlers"><i class="fa fa-user"></i>
 									&nbsp;{{bowler.name}}
-									<div class="buy-tickets-box">Buy Ticket</div>
+									<div class="buy-tickets-box">
+										<button class="btn btn-link" data-toggle="modal" data-target="#buyTicket" ng-click="updateBuyTicketModal(bowler)">
+											Buy Ticket
+										</button>
+
+									</div>
 									<!-- <button class="buy-tickets-box">Buy Tickets</button> -->
 								</li>
 								<li class="list-group-item bowler-item">
@@ -144,6 +146,27 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			  </div>
+			</div>
+
+			<div class="modal fade" id="buyTicket" tabindex="-1" role="dialog" aria-labelledby="buyTicket">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+						<h4 class="modal-title" id="myModalLabel">Buy Ticket!</h4>
+					</div>
+					<div class="modal-body">
+						<!-- <div class="row"> -->
+							<!-- <div class="col-lg-8 col-lg-offset-2"> -->
+							Buy a Ticket for {{ticketBuyer.name}}?
+							<!-- </div> -->
+						<!-- </div> -->
+						<button type="button" ng-click="buyTicket(ticketBuyer.id)" class="btn btn-primary" data-dismiss="modal">Buy!</button>
+
+					</div>
+					<div class="modal-footer">
 					</div>
 				</div>
 			  </div>
