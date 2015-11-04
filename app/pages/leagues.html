@@ -1,6 +1,6 @@
 		<div class="bottom">
 			<div class="layout">
-				<div id="table">
+				<div class="table">
 					<div class="smallLeagueBox" ng-repeat="league in leagues" ng-click="changeActiveLeague(league)" ng-class="{'smallLeagueBoxActive': league === activeLeague}">
 						<div class="smallLeagueBoxName">
 							<span>{{league.name}}</span>
@@ -32,16 +32,25 @@
 								<a ng-click="buyTicket(activeLeague.id, b.id, activeLeague.lotteries)">Buy Tickets</a>
 							</li>
 						</ul>
-						<div class="row"><div class="col-sm-6 col-sm-offset-3">
+						<div class="row"><div class="col-sm-8 col-sm-offset-2">
 							<ul class="list-group">
 								<li class="list-group-item bowler-item" ng-repeat="bowler in activeLeague.bowlers"><i class="fa fa-user"></i>
 									&nbsp;{{bowler.name}}
-									<!-- <div class="buy-tickets-box">Buy Tickets</div> -->
-									<button class="buy-tickets-box">Buy Tickets</button>
+									<div class="buy-tickets-box">Buy Ticket</div>
+									<!-- <button class="buy-tickets-box">Buy Tickets</button> -->
 								</li>
 							</ul>
 						</div></div>
 
+<!-- 						<div class="row"><div class="col-sm-6 col-sm-offset-3">
+							<div class="bowler-table">
+								<div class="bowler-row" ng-repeat="bowler in activeLeague.bowlers">
+									<div class="bowler-row-left">{{bowler.name}}</div>
+									<div class="bowler-row-right">Buy Tickets</div>
+								</div>
+							</div>
+						</div></div>
+ -->
 					</div>
 					<div class="lotteries"><span class="title">Lotteries</span><br/>
 						<ul>

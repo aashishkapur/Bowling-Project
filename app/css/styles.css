@@ -1,31 +1,38 @@
 .layout{
 	width: 100%;
-	background-color: rgba(100, 0, 225, .6);
+	/*background-color: rgba(100, 0, 225, .6);*/
 	min-height: 200px;
 	min-width: 100%;
 	height: 100%;
 }
-#table{
+.table{
 	display: inline-block;
 	width: 30%;
+
 	height: 100%;
-	min-height: 300px;
+	/*min-height: 300px;*/
 	float: left;
-	background-color: rgba(200, 10, 50, .6);
-	min-height: 300px;
+	/*background-color: rgba(200, 10, 50, .6);*/
+	
+	/*max-height: 800px;*/
+	
+	position: absolute;
+	/*left: 0;*/
+	/*top: 0;*/
+
 	padding-top: 10px;
 	padding-left: 5px;
 	padding-right: 5px;
 	border-right: 1px solid black;
-	overflow: scroll;
+	overflow-y: scroll;
 }
 .smallLeagueBox{
 	display: block;
 	width: 100%;
 	min-height: 115px;
-	background-color: black;
+	/*background-color: black;*/
 	margin-bottom: 5px;
-	background-color: rgba(50,250,250,.75);
+	/*background-color: rgba(50,250,250,.75);*/
 	border: 1px solid black;
 }
 .smallLeagueBox:hover{
@@ -54,7 +61,7 @@
 }
 .leagueInfoBox{
 	float: right;
-	background-color: rgba(50, 240, 50, .6);
+	/*background-color: rgba(50, 240, 50, .6);*/
 	width: 70%;
 	min-height: 300px;
 	text-align: center;
@@ -118,13 +125,52 @@
 }
 
 .buy-tickets-box{
-	line-height: 0.5em;
+	line-height: 20px;
 	text-align: right;
+	float: right;
+	/*background-color: red;*/
+	color: blue;
+	padding: 1px;
+	margin: 1px;
+	/*font-size:9px;*/
+	height: 100%;
+}
+
+.bowler-table{
+	width: 100%;
+	border-radius: 4px solid black;
+	background-color: white !important;
+	opacity: 1 !important;
+	font-size: 14px;
+}
+
+.bowler-row{
+	width: 100%;
+	display: block;
+	line-height: 20px;
+	background-color: rgba(50, 225, 75, .4) !important;
+
+}
+
+.bowler-row-left{
+	float: left;
+	height: 100%;
+	width: 50%;
+}
+
+.bowler-row-right{
 	float: right;
 	background-color: red;
 	color: white;
-	padding: 1px;
-	margin: 1px;
-	font-size:9px;
-	height: 10px;
+	height: 100%;
+	width: 50%;
 }
+
+
+
+
+
+
+
+
+
