@@ -14,6 +14,8 @@
 		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-resource.js"></script>
 
 
+		<link rel='stylesheet' href='css/loading-bar.min.css' type='text/css'/>
+		<script type='text/javascript' src='js/loading-bar.min.js'></script>
 
 		<script src="js/scripts.js"></script>
 		<script src="js/controllers.js"></script>
@@ -29,12 +31,13 @@
 		body{padding-top: 55px;}
 		</style>
 
+
 	</head>
 
 	<body>
 
 		<!-- Static navbar -->
-		<div style="position: absolute; left: 0px; top: 0px; display: none; background: gold; padding: 0.3em; font-weight: bold;" id="loading">LOADING!!!</div>
+		<!-- <div style="position: absolute; left: 0px; top: 0px; display: none; background: gold; padding: 0.3em; font-weight: bold;" id="loading">LOADING!!!</div> -->
 		<div ng-include="'pages/navbar.html'"></div>
 
 		<div ng-view></div>

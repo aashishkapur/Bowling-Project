@@ -4,6 +4,7 @@
   "description": "An app that interacts with the NextCapital APIs and provides a frontend",
   "main": "server.js",
   "dependencies": {
+    "angular-loading-bar": "^0.8.0",
     "express": "^4.13.3"
   },
   "repository": {

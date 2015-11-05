@@ -4,8 +4,11 @@ var bowlingApp = angular.module("bowlingApp",
 		'ngResource', 
 		'bowlingApp.controllers',
 		'bowlingApp.factory',
-		'bowlingApp.services'
+		'bowlingApp.services',
+		'angular-loading-bar'
 	]);
+
+// angular.module('bowlingApp', [''])
 
 bowlingApp.config(function($routeProvider, loginCredsProvider) {
 

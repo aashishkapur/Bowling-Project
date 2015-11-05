@@ -11,10 +11,10 @@ angular.module('bowlingApp.controllers')
 		loginCreds.set($scope.email, $scope.password);
 		console.log("redirect");
 		$location.path("leagues");
-		    $timeout(function(){
-		    	console.log("loglogloglog");
+			$timeout(function(){
+				console.log("loglogloglog");
 			$rootScope.$broadcast('getLeagues:fire');
-    }, 200);
+	}, 200);
 
 	}
 
@@ -79,13 +79,21 @@ angular.module('bowlingApp.controllers')
 
 	// $rootScope.$on('getLeagues:fire', $scope.getLeagues);
 	// console.log("fasdfdsadfsdfsadfsdfsdfs");
-	    $scope.$on('getLeagues:fire', function(){
-	        // $scope.$apply(function(){
-	        	console.log("sdafdfsfdsdfs");
-	            $scope.getLeagues();
-	            console.log("gotLeagues");
-	        // });
-    });
+		$scope.$on('getLeagues:fire', function(){
+			// $scope.$apply(function(){
+				console.log("sdafdfsfdsdfs");
+				$scope.getLeagues();
+				console.log("gotLeagues");
+			// });
+		});
+
+
+	function APIError(){
+		if (window.confirm("Sorry, there was an error.  This page will reload")) { 
+			window.location.href = "index.html";
+		}
+		window.location.href = "index.html";
+	}
 
 	$scope.getLeagues = function(){
 		console.log("STARTING");
