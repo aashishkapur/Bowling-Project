@@ -62,7 +62,7 @@
 								<div class="panel panel-default">
 									<div class="panel-heading" role="tab" id="collapseListGroupHeading1">
 										<h5 class="panel-title">
-											<button class="btn bowler-add-button" data-toggle="modal" data-target="#drawTicket" ng-click="getOtherBowlers()">
+											<button class="btn bowler-add-button" data-toggle="modal" data-target="#drawTicket">
 												Draw Ticket For Lottery	
 											</button>
 										</h5>
@@ -82,37 +82,38 @@
 						<h4 class="modal-title" id="drawTicketLabel">Draw Ticket!</h4>
 					</div>
 					<div class="modal-body">
-						<div ng-switch on="">
+						<div ng-switch on="winningTicketSequence">
+							<!-- DEFAULT STATE, NO TICKET HAS BEEN DRAWN -->
 							<div class="row" ng-switch-default>
 								<div class="col-lg-8 col-lg-offset-2">
-										<button class="btn btn-primary" ng-click="">
+										<button class="btn btn-primary btn-lg btn-block" ng-click="drawWinningTicket()">
 											Draw Ticket!
 										</button>
-										<button class="btn" ng-click="">
-											Cancel!
-										</button>
+										<!-- <button class="btn" ng-click=""> -->
+											<!-- Cancel! -->
+										<!-- </button> -->
 								</div>
 							</div>
-							<div class="row" ng-switch-when="">
+							<!-- STATE 1, WINNING TICKET HAS BEEN DRAWN, NOT ROLLED -->
+							<div class="row" ng-switch-when="1">
 								<div class="col-lg-8 col-lg-offset-2">
 
-								_____ is the winner
+								{{getBowlerName(winningTicket.bowler_id)}} is the winner!!!
 
-								# of pins: 
 								<div class="form-group">
-									<label for="newLeague" class="col-sm-2 control-label">New League</label>
+									<label for="newLeague" class="col-sm-2 control-label">Pins Knocked Over </label>
 									<div class="col-sm-10">
-										<input type="text" ng-model="newLeagueName" class="form-control" placeholder="New League" id="newLeague"/>
+										<input type="text" ng-model="newLeagueName" class="form-control" placeholder="Pins Knocked Over"/>
 									</div>
 								</div>
+ 								</div>
+							</div>
+							<!-- STATE 2, WINNING TICKET HAS BEEN DRAWN, PERSON HAS ROLLED -->
+							<div class="row" ng-switch-when="2">
+								<div class="col-lg-8 col-lg-offset-2">
 
-<!-- 										<button class="btn btn-primary" ng-click="">
-											Draw Ticket!
-										</button>
-										<button class="btn" ng-click="">
-											Cancel!
-										</button>
- -->							
+								{{getBowlerName(winningTicket.bowler_id)}} has won {{winningTicket.payout * $scope.activeLeague.balance }}
+
  								</div>
 							</div>
 

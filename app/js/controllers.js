@@ -426,12 +426,35 @@ angular.module('bowlingApp.controllers')
 	};
 
 
-	$scope.drawTicket = function(lotteries){
+	$scope.drawWinningTicket = function(){
+		console.log("lottery id: " + $scope.activeLeague.lotteries[0].id)
 		API.league().getWinningTicketForJackpot(
-				{leagueID: leagueID, type: "lotteries", lotteryID: lotteries[0].id, type2: "roll"}
+				{leagueID: $scope.activeLeague.id, type: "lotteries", lotteryID: $scope.activeLeague.lotteries[0].id, type2: "roll"}
 			).$promise.then(
 		function(value){
 			console.log(value);
+			$scope.winningTicketSequence = 1;
+			$scope.winningTicket = value;
+
+		},
+		function(error){
+			console.log(error);
+			alert("error: " + error);
+		});
+	};
+
+	$scope.recordResultsOfRoll = function(lotteries){
+
+		var json = JSON.stringify({pin_count : pinCount});
+
+		API.league().recordResultsOfRoll(
+				{leagueID: leagueID, type: "lotteries", lotteryID: $scope.activeLeague.lotteries[0].id, type2: "roll"}, json
+			).$promise.then(
+		function(value){
+			console.log(value);
+			$scope.winningTicketSequence = 1;
+			$scope.winningTicket = value;
+
 		},
 		function(error){
 			console.log(error);
@@ -440,6 +463,9 @@ angular.module('bowlingApp.controllers')
 	};
 
 	$scope.activeLeague;
+
+	$scope.winningTicketSequence = 0;
+	$scope.winningTicket
 
 	$scope.changeActiveLeague = function(league){
 		$scope.activeLeague = league;
@@ -568,11 +594,18 @@ angular.module('bowlingApp.controllers')
 		}
 	}
 
-	$scope.addLeague = function(){
-
+	$scope.getBowlerName = function(bowlerID){
+		var bowlerName = "ERROR";
+		for(var m = 0; m < $scope.bowlers.length; m++)
+		{
+			if($scope.bowlers[m].id === ticket.bowler_id)
+			{
+				bowlerName = $scope.bowlers[m].name;
+				m = $scope.bowlers.length;
+			}
+		}
+		return bowlerName;
 	};
-
-
 
 
 
