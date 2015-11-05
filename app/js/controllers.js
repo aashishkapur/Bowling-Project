@@ -407,7 +407,7 @@ angular.module('bowlingApp.controllers')
 	$scope.changeActiveLeague = function(league){
 		$scope.activeLeague = league;
 		console.log("CHANGE ACTIVE LEAGUE: " + league);
-		$scope.sortTicketsByPerson();
+		// $scope.sortTicketsByPerson();
 	};
 
 	$scope.activeBowlers = [];
@@ -438,7 +438,7 @@ angular.module('bowlingApp.controllers')
 			var found = false;
 			for(var j = 0; j < $scope.activeLeague.bowlers.length; j++)
 			{
-				console.log("ID:" + $scope.bowlers[i].id + "\t ID2:" + $scope.activeLeague.bowlers[j].id);
+				// console.log("ID:" + $scope.bowlers[i].id + "\t ID2:" + $scope.activeLeague.bowlers[j].id);
 				if($scope.bowlers[i].id === $scope.activeLeague.bowlers[j].id)
 				{
 					found = true;
@@ -450,10 +450,10 @@ angular.module('bowlingApp.controllers')
 				otherBowlers.push($scope.bowlers[i]);
 			}
 		}
-		console.log("getting other bowlers, " + $scope.activeLeague.id);
-		console.log(otherBowlers);
+		// console.log("getting other bowlers, " + $scope.activeLeague.id);
+		// console.log(otherBowlers);
 		$scope.activeLeague.otherBowlers = otherBowlers;
-		console.log($scope.activeLeague.otherBowlers);
+		// console.log($scope.activeLeague.otherBowlers);
 
 	};
 
