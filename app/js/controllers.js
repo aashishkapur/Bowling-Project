@@ -110,6 +110,7 @@ angular.module('bowlingApp.controllers')
 		},
 		function(error){
 			console.log(error);
+			APIError();
 		});
 
 	};
@@ -181,7 +182,8 @@ angular.module('bowlingApp.controllers')
 						},
 						function(error){
 							console.log(error);
-							alert("error: " + error);
+							// alert("error: " + error);
+							APIError();
 						});
 					}
 				// -----
@@ -189,19 +191,21 @@ angular.module('bowlingApp.controllers')
 						},
 				function(error){
 					console.log(error);
-					alert("error: " + error);
+					// alert("error: " + error);
+					APIError();
 				});
 
 			},
 			function(error){
 				console.log(error);
-				alert("error: " + error);
+				// alert("error: " + error);
+				APIError();
 			});
 		},
 		function(error){
 			console.log(error);
+			APIError();
 		});
-		console.log("console.log(updatedLeague);")
 
 	}
 
@@ -264,6 +268,7 @@ angular.module('bowlingApp.controllers')
 		},
 		function(error){
 			console.log(error);
+			APIError();
 		});
 
 
@@ -284,6 +289,7 @@ angular.module('bowlingApp.controllers')
 		},
 		function(error){
 			console.log(error);
+			APIError();
 		});
 
 		$scope.newLeagueName = "";
@@ -299,6 +305,7 @@ angular.module('bowlingApp.controllers')
 		},
 		function(error){
 			console.log(error);
+			APIError();
 		});
 
 	};
@@ -312,6 +319,7 @@ angular.module('bowlingApp.controllers')
 		},
 		function(error){
 			console.log(error);
+			APIError();
 		});
 
 	};
@@ -327,6 +335,7 @@ angular.module('bowlingApp.controllers')
 		},
 		function(error){
 			console.log(error);
+			APIError();
 		});
 
 		$scope.newBowlerName = "";
@@ -342,6 +351,7 @@ angular.module('bowlingApp.controllers')
 		},
 		function(error){
 			console.log(error);
+			APIError();
 		});
 	};
 
@@ -368,7 +378,8 @@ angular.module('bowlingApp.controllers')
 		},
 		function(error){
 			console.log(error);
-			alert("error: " + error);
+			// alert("error: " + error);
+			APIError();
 		});
 
 	};
@@ -406,7 +417,8 @@ angular.module('bowlingApp.controllers')
 		},
 		function(error){
 			console.log(error);
-			alert("error: " + error);
+			// alert("error: " + error);
+			APIError();
 		});
 
 	};
@@ -436,7 +448,8 @@ angular.module('bowlingApp.controllers')
 		},
 		function(error){
 			console.log(error);
-			alert("error: " + error);
+			// alert("error: " + error);
+			APIError();
 		});
 	};
 
@@ -481,7 +494,8 @@ angular.module('bowlingApp.controllers')
 			},
 			function(error){
 				console.log(error);
-				alert("error: " + error);
+				// alert("error: " + error);
+				APIError();
 			});
 
 		}
@@ -501,7 +515,8 @@ angular.module('bowlingApp.controllers')
 		},
 		function(error){
 			console.log(error);
-			alert("error: " + error);
+			// alert("error: " + error);
+			APIError();
 		});
 	};
 
@@ -523,7 +538,8 @@ angular.module('bowlingApp.controllers')
 		},
 		function(error){
 			console.log(error);
-			alert("error: " + error);
+			// alert("error: " + error);
+			APIError();
 		});
 	};
 
