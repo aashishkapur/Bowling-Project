@@ -6,7 +6,7 @@
 							<span>{{league.name}}</span>
 						</div>
 						<div class="smallLeagueBoxInfo">
-							<span>{{league.bowlers.length}} Bowlers, {{league.jackpot | currency}} Jackpot</span>
+							<span>{{league.bowlers.length}} Bowler(s)</span>
 						</div>
 					</div>
 					<div class="smallLeagueBox"  ng-click="">
@@ -91,10 +91,15 @@
 									</div>
 									<div id="collapseListGroup1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading1">
 										<ul class="list-group">
-											<li class="list-group-item" ng-repeat="ticket in 1"><i class="fa fa-ticket"></i> &nbsp;
+<!-- 											<li class="list-group-item" ng-repeat="ticket in 1"><i class="fa fa-ticket"></i> &nbsp;
 												ID: {{ticket.id}}, BowlerID: {{ticket.bowler_id}}
 											</li>
-										</ul>
+ -->									
+ 											<li class="list-group-item" ng-repeat="ticketHolder in lottery.ticketHolders"><i class="fa fa-ticket"></i> &nbsp;
+ 												Name: {{ticketHolder.name}}, NumTickets: {{ticketHolder.numTickets}}, ID: {{ticketHolder.bowlerID}}
+											</li>
+
+ 										</ul>
 									</div>
 								</div>
 								<div class="panel panel-default">

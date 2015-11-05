@@ -402,6 +402,7 @@ angular.module('bowlingApp.controllers')
 	$scope.changeActiveLeague = function(league){
 		$scope.activeLeague = league;
 		console.log("CHANGE ACTIVE LEAGUE: " + league);
+		$scope.sortTicketsByPerson();
 	};
 
 	$scope.activeBowlers = [];
@@ -486,23 +487,35 @@ angular.module('bowlingApp.controllers')
 			for(var j = 0; j < $scope.activeLeague.lotteries[i].tickets.length; j++)
 			{
 				var ticket = $scope.activeLeague.lotteries[i].tickets[j];
+				console.log(ticket);
 				var found = false;
+				console.log($scope.activeLeague.lotteries[i].ticketHolders);
 				for(var k = 0; k < $scope.activeLeague.lotteries[i].ticketHolders.length; k++)
 				{
-					if(ticket.bowlerID === $scope.activeLeague.lotteries[i].ticketHolders[k].id)
+					if(ticket.bowler_ID === $scope.activeLeague.lotteries[i].ticketHolders[k].id)
 					{
 						$scope.activeLeague.lotteries[i].ticketHolders[k].numTickets++;
 						k = $scope.activeLeague.lotteries[i].ticketHolders.length;
 						found = true;
+						console.log("found: " + ticket.bowler_ID + "\t" + $scope.activeLeague.lotteries[i].ticketHolders[k].id)
 					}
 				}
 				if(!found)
 				{
+					var bowlerName = "ERROR";
+					for(var m = 0; m < $scope.bowlers.length; m++)
+					{
+						if($scope.bowlers[m].id === ticket.bowler_ID)
+						{
+							bowlerName = $scope.bowlers[m].name;
+						}
+					}
 					var newPerson = {
-						bowlerID = ticket.bowlerID,
-						name = getName(ticket.bowlerID),
+						bowler_ID: ticket.bowler_ID,
+						name: bowlerName,
 						numTickets: 1
 					}
+					console.log("created new person: " + newPerson.bowlerID + "  " + newPerson.name + "  " + newPerson.numTickets)
 					$scope.activeLeague.lotteries[i].ticketHolders.push(newPerson);	
 				}
 			}
