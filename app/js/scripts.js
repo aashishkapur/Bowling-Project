@@ -29,6 +29,8 @@ bowlingApp.config(function($routeProvider, loginCredsProvider) {
 					console.log("isUserLoggedIn at route provider: " + loginCreds.signedIn());
 					if(!loginCreds.signedIn())
 					{
+						window.location.href = "index.html";
+
 						// change location somehow if not logged in
 						// $location.path('/');
 					}
