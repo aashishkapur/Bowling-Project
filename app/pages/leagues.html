@@ -11,7 +11,11 @@
 					</div>
 					<div class="smallLeagueBox"  ng-click="">
 						<div class="smallLeagueBoxName">
-							<span>Add New</span>
+							<span><a class="btn btn-link" data-toggle="modal" data-target="#addLeague">
+											Make League
+							</a></span>
+
+							<!-- <span>Add New</span> -->
 						</div>
 					</div>
 				</div>
@@ -148,23 +152,20 @@
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-						<h4 class="modal-title" id="myModalLabel">Add Leagues!</h4>
+						<h4 class="modal-title" id="addLeagueLabel">Add Leagues!</h4>
 					</div>
 					<div class="modal-body">
 						<div class="row">
 							<div class="col-lg-8 col-lg-offset-2">
-<!-- 								{{bowlers}}
-								<br/>
-								sdfhjkuhkjliohujn
-
-								<ul class="bowlerSelect">
-									<li class="bowlerSelectItem" ng-repeat="bowler in bowlers" ng-click="changeActiveState(bowler.id)" ng-class="{'bowlerSelectItemActive': getActiveBowlers(bowler.id)}">{{bowler.name}}</li>
-								</ul>
- -->							</div>
+								<div class="form-group">
+									<label for="newLeague" class="col-sm-2 control-label">New League</label>
+									<div class="col-sm-10">
+										<input type="text" ng-model="newLeagueName" class="form-control" placeholder="New League" id="newLeague"/>
+									</div>
+								</div>
+								<button type="button" ng-click="addLeague()"class="btn btn-default" data-dismiss="modal">Add League</button>
+							</div>
 						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					</div>
 				</div>
 			  </div>
