@@ -32,7 +32,7 @@
 									</button>
 								</li>
 								<li class="list-group-item bowler-item">
-									<button class="btn bowler-add-button" data-toggle="modal" data-target="#myModal" ng-click="getOtherBowlers()">Add Bowlers</button>
+									<button class="btn bowler-add-button" data-toggle="modal" data-target="#addOtherBowlers" ng-click="getOtherBowlers()">Add Bowlers</button>
 								</li>
 
 
@@ -126,6 +126,33 @@
 			  </div>
 			</div>
 
+			<div class="modal fade" id="addOtherBowlers" tabindex="-1" role="dialog" aria-labelledby="addOtherBowlersLabel">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+						<h4 class="modal-title" id="addOtherBowlersLabel">Add Bowlers!</h4>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-lg-8 col-lg-offset-2">
+								<ul class="list-group">
+									<li class="list-group-item noselect" ng-repeat="bowler in activeLeague.otherBowlers" ng-click="changeActiveState(bowler.id)" ng-class="{'active': getActiveBowlers(bowler.id)}"><i class="fa fa-user"></i> &nbsp; {{bowler.name}}</li>
+								</ul>
+
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+
+						<button class="btn btn-primary" data-dismiss="modal" ng-click="addOtherBowlersToLeague()">Add Bowlers!</button>
+
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			  </div>
+			</div>
+
+
 			<div class="modal fade" id="addLeague" tabindex="-1" role="dialog" aria-labelledby="addLeague">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
@@ -138,14 +165,14 @@
 								<div class="form-group">
 									<label for="newLeague" class="col-sm-2 control-label">New League</label>
 									<div class="col-sm-10">
-										<input type="text" ng-model="newLeagueName" class="form-control" placeholder="New League" id="newLeague"/>
+										<input type="text" ng-model="newLeagueName" class="form-control" placeholder="New League"/>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" ng-click="addLeague()" class="btn btn-primary" data-dismiss="modal">Add League</button>
+						<button type="button" ng-click="makeLeague()" class="btn btn-primary" data-dismiss="modal">Add League</button>
 
 						<button type="button" class="btn" data-dismiss="modal">Close</button>
 					</div>
@@ -175,8 +202,36 @@
 						<button type="button" class="btn" data-dismiss="modal">Close</button>
 					</div>
 				</div></div>
+				</div>
+			</div>
+
+			<div class="modal fade" id="addBowler" tabindex="-1" role="dialog" aria-labelledby="addBowler">
+				<div class="modal-dialog" role="document">
+					<div class=""><div class="modal-content">
+						<div class="modal-header">
+						<h4 class="modal-title" id="myModalLabel">Add Bowler!</h4>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-lg-8 col-lg-offset-2">
+								<div class="form-group">
+									<label for="newBowlerName" class="col-sm-2 control-label">New Bowler</label>
+									<div class="col-sm-10">
+										<input type="text" ng-model="newBowlerName" class="form-control" placeholder="Name" id="newBowlerName"/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" ng-click="makeBowler(newBowlerName)" class="btn btn-primary" data-dismiss="modal" style="text-align:center;">Add!</button>
+
+						<button type="button" class="btn" data-dismiss="modal">Close</button>
+					</div>
+				</div></div>
 			  </div>
 			</div>
+
 
 
 

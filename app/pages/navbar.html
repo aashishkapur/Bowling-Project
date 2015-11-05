@@ -13,8 +13,7 @@
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="#/">Home</a></li>
 					<li><a href="#leagues">Leagues</a></li>
-					<li><a href="#contact">Add Bowlers</a></li>
-					<!-- <button ng-click="checkSignedIn()">Check Signed In</button> -->
+					<li ng-if="signedIn()"><a href="" data-toggle="modal" data-target="#addBowler">Add Bowlers</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li ng-if="signedIn()" ng-click="signOut()"><a href="">Sign Out</a></li>
