@@ -10,8 +10,6 @@ angular.module('bowlingApp.controllers')
 	function redirectPage(){
 		loginCreds.set($scope.email, $scope.password);
 		console.log("redirect");
-		// $window.location.href = '../leagues'
-		// window.location.href = window.location.href + '/leagues';
 		$location.path("leagues");
 		    $timeout(function(){
 		    	console.log("loglogloglog");
@@ -27,15 +25,13 @@ angular.module('bowlingApp.controllers')
 		function(value){
 			console.log(value);
 			console.log(value.id);
-			// $scope.id = value.id;
-
-			// $scope.getBowlers();
-			// $scope.getLeagues();
+			$scope.badCreds = false;
 
 			redirectPage();
 		},
 		function(error){
 			console.log(error);
+			$scope.badCreds = true;
 		});
 
 	};
