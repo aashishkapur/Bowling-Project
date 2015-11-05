@@ -86,9 +86,9 @@
 							<!-- DEFAULT STATE, NO TICKET HAS BEEN DRAWN -->
 							<div class="row" ng-switch-default>
 								<div class="col-lg-8 col-lg-offset-2">
-										<button class="btn btn-primary btn-lg btn-block" ng-click="drawWinningTicket()">
-											Draw Ticket!
-										</button>
+									<button class="btn btn-primary btn-lg btn-block" ng-click="drawWinningTicket()">
+										Draw Ticket!
+									</button>
 										<!-- <button class="btn" ng-click=""> -->
 											<!-- Cancel! -->
 										<!-- </button> -->
@@ -96,23 +96,27 @@
 							</div>
 							<!-- STATE 1, WINNING TICKET HAS BEEN DRAWN, NOT ROLLED -->
 							<div class="row" ng-switch-when="1">
-								<div class="col-lg-8 col-lg-offset-2">
+								<div class="col-lg-12">
+									<span style="text-align:center;">
+										{{getBowlerName(winningTicket.bowler_id)}} is the winner!!!
+									</span>
 
-								{{getBowlerName(winningTicket.bowler_id)}} is the winner!!!
-
-								<div class="form-group">
-									<label for="newLeague" class="col-sm-2 control-label">Pins Knocked Over </label>
-									<div class="col-sm-10">
-										<input type="text" ng-model="newLeagueName" class="form-control" placeholder="Pins Knocked Over"/>
+									<div class="form-group">
+										<label for="newLeague" class="col-sm-2 control-label">Pins Knocked Over </label>
+										<div class="col-sm-10">
+											<input type="number" ng-model="pinsKnockedOver" class="form-control" placeholder="Pins Knocked Over"/>
+										</div>
 									</div>
-								</div>
+									<button class="btn btn-primary" ng-click="recordResultsOfRoll()">
+										Get Payout!
+									</button>
  								</div>
 							</div>
 							<!-- STATE 2, WINNING TICKET HAS BEEN DRAWN, PERSON HAS ROLLED -->
 							<div class="row" ng-switch-when="2">
 								<div class="col-lg-8 col-lg-offset-2">
 
-								{{getBowlerName(winningTicket.bowler_id)}} has won {{winningTicket.payout * $scope.activeLeague.balance }}
+								{{getBowlerName(winningTicket.bowler_id)}} has won {{winningTicket.payout}}!!
 
  								</div>
 							</div>
@@ -121,7 +125,7 @@
 					</div>
 					<div class="modal-footer">
 
-						<button type="button" class="btn" data-dismiss="modal">Close</button>
+						<button type="button" class="btn" data-dismiss="modal" ng-click="doneWithTickets()">Close</button>
 					</div>
 				</div>
 			  </div>
