@@ -58,12 +58,17 @@ angular.module('bowlingApp.controllers')
 
 }])
 
-.controller('navController', function($scope, loginCreds){
+.controller('navController', function($scope, loginCreds, $window){
 	$scope.signedIn = loginCreds.signedIn;
 
 	$scope.checkSignedIn = function(){
 		console.log(loginCreds.signedIn() + "\t-" + loginCreds.get().email);
 	};
+
+	$scope.signOut = function(){
+		// location = location;
+		$window.location.href = "index.html";
+	}
 })
 
 .controller('leaguesController', function($scope, loginCreds, $rootScope, API, $timeout){

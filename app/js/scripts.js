@@ -26,8 +26,12 @@ bowlingApp.config(function($routeProvider, loginCredsProvider) {
 			controller  : 'leaguesController',
 			resolve: {
 				data: function(loginCreds){
-					console.log("asfhudfsadfs\t" + loginCreds.signedIn());
-					return loginCreds.signedIn();
+					console.log("isUserLoggedIn at route provider: " + loginCreds.signedIn());
+					if(!loginCreds.signedIn())
+					{
+						// change location somehow if not logged in
+						// $location.path('/');
+					}
 				}
 
 			}
