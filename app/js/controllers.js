@@ -691,6 +691,14 @@ angular.module('bowlingApp.controllers')
 		return bowlerName;
 	};
 
+	$scope.getTextForPayout = function(payout){
+		if(payout !== 0)
+			return payout;
+		else
+			return "Not Paid Out";
+
+	}
+
 
 
 });

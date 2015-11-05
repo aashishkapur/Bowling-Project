@@ -46,14 +46,14 @@
 									<div class="panel-heading" role="tab" id="collapseListGroupHeading1">
 										<h5 class="panel-title">
 											<button class="btn btn primary" data-target="{{'#collapseListGroup-' + lottery.id}}" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="{{'collapseListGroup-' + lottery.id}}" ng-click="sortTicketsByPerson(lottery.id)"><i class="fa fa-ticket"></i> &nbsp; 
-												Lottery ID: {{lottery.id}}, league ID: {{lottery.league_id}}, balance: {{lottery.balance}}, payout: {{lottery.payout}}
+												Lottery ID: {{lottery.id}}, balance: {{lottery.balance | currency}}, payout: {{getTextForPayout(lottery.payout) | currency}}
 											</button>
 										</h5>
 									</div>
 									<div id="{{'collapseListGroup-' + lottery.id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="{{'collapseListGroupHeading-' + lottery.id}}">
 										<ul class="list-group">
- 											<li class="list-group-item" ng-repeat="ticketHolder in lottery.ticketHolders"><i class="fa fa-ticket"></i> &nbsp;
- 												Name: {{ticketHolder.name}}, NumTickets: {{ticketHolder.numTickets}}, ID: {{ticketHolder.bowlerID}}
+ 											<li class="list-group-item" ng-repeat="ticketHolder in lottery.ticketHolders"><i class="fa fa-user"></i> &nbsp;
+ 												Name: {{ticketHolder.name}}, Number of Tickets: {{ticketHolder.numTickets}}
 											</li>
  										</ul>
 									</div>
