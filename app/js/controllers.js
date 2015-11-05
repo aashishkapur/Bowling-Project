@@ -106,37 +106,59 @@ angular.module('bowlingApp.controllers')
 
 	};
 
+	$scope.updatedLeague = {};
+	$scope.lotteryDone = [];
+
 	function resetLeague(leagueID){
-		var updatedLeague = {};
+		$scope.updatedLeague = {};
 
 		API.league().getLeague({leagueID: leagueID}).$promise.then(
 		function(value){
 			// console.log(value);
-			updatedLeague = value;
-			console.log(updatedLeague);
+			$scope.updatedLeague = value;
+			console.log($scope.updatedLeague);
 
 			API.league().getBowlersInLeague({leagueID: leagueID, type: "bowlers"}).$promise.then(
 			function(value2){
-				updatedLeague.bowlers = value2;
-				console.log(updatedLeague);
+				$scope.updatedLeague.bowlers = value2;
+				console.log($scope.updatedLeague);
 
 				API.league().getLotteriesInLeague({leagueID: leagueID, type: "lotteries"}).$promise.then(
 				function(value3){
 
-					updatedLeague.lotteries = value3;
-					console.log(updatedLeague);
+					$scope.updatedLeague.lotteries = value3;
+					console.log($scope.updatedLeague);
 
-					for(var i = 0; i < updatedLeague.lotteries.length; i++)
+					for(var i = 0; i < $scope.updatedLeague.lotteries.length; i++)
 					{
+
 						API.league().getAllTicketsForJackpot(
-								{leagueID: leagueID, type: "lotteries", lotteryID: updatedLeague.lotteries[i].id, type2: "tickets"}
+								{leagueID: leagueID, type: "lotteries", lotteryID: $scope.updatedLeague.lotteries[i].id, type2: "tickets"}
 							).$promise.then(
 						function(value4){
 							if(value4.length > 0)
 							{
 									// if(value4[0].lottery_id === updatedLeague.lotteries[j].id)
 									// {
-										updatedLeague.lotteries[i].tickets = value4;
+										// console.log("I:" + i);
+										// console.log(updatedLeague.lotteries[i]);
+										// updatedLeague.lotteries[i].tickets = value4;
+										console.log("146146" + value4[0].lottery_id);
+										console.log(value4);
+										for(var j = 0; j < $scope.updatedLeague.lotteries.length; j++)
+										{
+											console.log($scope.updatedLeague.lotteries[j].id);
+											if(value4[0].lottery_id === $scope.updatedLeague.lotteries[j].id)
+											{
+												$scope.updatedLeague.lotteries[j].tickets = value4;
+												console.log("val4");
+												console.log(value4);
+
+												console.log("146146" + value4[0].lottery_id +"\t" +  $scope.updatedLeague.lotteries[j].id);
+
+												$scope.lotteryDone.push(value4[0].lottery_id);
+											}
+										}
 										// console.log("adding tickets:");
 										// console.log(value4);
 										// console.log(updatedLeague.lotteries[j]);
@@ -145,32 +167,8 @@ angular.module('bowlingApp.controllers')
 										// console.log("-----------------------");
 									// }
 							}
-							console.log(updatedLeague);
-
-							if((i + 1) === updatedLeague.lotteries.length)
-							{
-								var found = false;
-
-								for(var i = 0; i < $scope.leagues.length; i++)
-								{
-									if(leagueID === $scope.leagues[i].id)
-									{
-										// $scope.leagues.splice(i, 1);
-
-										// $scope.leagues.push(updatedLeague);
-										$scope.leagues[i] = updatedLeague;
-
-										i = $scope.leagues.length;
-										found = true;
-										console.log("chaning league")
-									}
-								}
-
-								if(!found)
-									$scope.leagues.push(updatedLeague)
-
-								$scope.changeActiveLeague(updatedLeague);
-							}
+							console.log($scope.updatedLeague);
+							checkIfFinished(leagueID);
 
 						},
 						function(error){
@@ -197,6 +195,48 @@ angular.module('bowlingApp.controllers')
 		});
 		console.log("console.log(updatedLeague);")
 
+	}
+
+	function checkIfFinished(leagueID)
+	{
+		console.log("check if finished");
+		console.log($scope.lotteryDone);
+		var done = true;
+		for(var i = 0; i < $scope.updatedLeague.lotteries.length; i++)
+		{
+			if($scope.lotteryDone.indexOf($scope.updatedLeague.lotteries[i].id) === -1)
+			{
+				done = false;
+				console.log("loop no run,\t" + $scope.updatedLeague.lotteries[i].id);
+			}
+		}
+
+
+		if(done)
+		{
+			console.log("never runs-------------------------------------------");
+			var found = false;
+
+			for(var i = 0; i < $scope.leagues.length; i++)
+			{
+				if(leagueID === $scope.leagues[i].id)
+				{
+					// $scope.leagues.splice(i, 1);
+
+					// $scope.leagues.push($scope.updatedLeague);
+					$scope.leagues[i] = $scope.updatedLeague;
+
+					i = $scope.leagues.length;
+					found = true;
+					console.log("changing league")
+				}
+			}
+
+			if(!found)
+				$scope.leagues.push($scope.updatedLeague)
+
+			$scope.changeActiveLeague($scope.updatedLeague);
+		}
 
 
 	}
@@ -419,6 +459,7 @@ angular.module('bowlingApp.controllers')
 					{
 						for(var i = 0; i < $scope.leagues.length; i++)
 						{
+							// console.log($scope.leagues[i].lotteries);
 							for(var j = 0; j < $scope.leagues[i].lotteries.length; j++)
 							{
 								if(leagueID === $scope.leagues[i].id && 
@@ -440,9 +481,9 @@ angular.module('bowlingApp.controllers')
 
 
 	$scope.drawWinningTicket = function(){
-		console.log("lottery id: " + $scope.activeLeague.lotteries[0].id)
+		console.log("lottery id: " + getActiveLottery().id)
 		API.league().getWinningTicketForJackpot(
-				{leagueID: $scope.activeLeague.id, type: "lotteries", lotteryID: $scope.activeLeague.lotteries[0].id, type2: "roll"}
+				{leagueID: $scope.activeLeague.id, type: "lotteries", lotteryID: getActiveLottery().id, type2: "roll"}
 			).$promise.then(
 		function(value){
 			console.log(value);
@@ -462,12 +503,14 @@ angular.module('bowlingApp.controllers')
 		var json = JSON.stringify({pin_count : $scope.pinsKnockedOver});
 
 		API.league().recordResultsOfRoll(
-				{leagueID: $scope.activeLeague.id, type: "lotteries", lotteryID: $scope.activeLeague.lotteries[0].id, type2: "roll"}, json
+				{leagueID: $scope.activeLeague.id, type: "lotteries", lotteryID: getActiveLottery().id, type2: "roll"}, json
 			).$promise.then(
 		function(value){
 			console.log(value);
 			$scope.winningTicketSequence = 2;
 			$scope.winningTicket = value;
+			resetLeague($scope.activeLeague.id);
+
 
 		},
 		function(error){
@@ -568,7 +611,7 @@ angular.module('bowlingApp.controllers')
 		{
 			$scope.activeLeague.lotteries[i].ticketHolders = [];
 
-
+			if(  (typeof $scope.activeLeague.lotteries[i].tickets) !=  'undefined'){
 			for(var j = 0; j < $scope.activeLeague.lotteries[i].tickets.length; j++)
 			{
 				var ticket = $scope.activeLeague.lotteries[i].tickets[j];
@@ -607,6 +650,7 @@ angular.module('bowlingApp.controllers')
 					$scope.activeLeague.lotteries[i].ticketHolders.push(newPerson);	
 				}
 			}
+			}
 		}
 	}
 
@@ -622,10 +666,6 @@ angular.module('bowlingApp.controllers')
 		}
 		return bowlerName;
 	};
-
-	$scope.doneWithTickets = function(){
-		resetLeague($scope.activeLeague.id);
-	}
 
 
 
