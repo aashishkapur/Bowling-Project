@@ -479,7 +479,7 @@ angular.module('bowlingApp.controllers')
 	$scope.activeLeague;
 
 	$scope.winningTicketSequence = 0;
-	$scope.winningTicket
+	$scope.winningTicket;
 
 	$scope.changeActiveLeague = function(league){
 		$scope.activeLeague = league;
